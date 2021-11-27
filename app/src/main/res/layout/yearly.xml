@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_margin="30dp">
+
+    <TextView
+        android:id="@+id/yearly_goalSet"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        android:layout_marginBottom="5dp"
+        android:textColor="@color/black"
+        android:textStyle="bold"
+        android:textSize="12pt"
+        android:text="연도별 목표 설정" />
+
+    <TextView
+        android:id="@+id/thisYear"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        android:layout_marginBottom="5dp"
+        android:textColor="@color/black"
+        android:textStyle="bold"
+        android:textSize="9pt"
+        android:background="@drawable/date_bg"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp"
+        android:text="2021" />
+
+    <TextView
+        android:id="@+id/whatIs_goal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        android:layout_marginBottom="5dp"
+        android:textColor="@color/black"
+        android:textSize="8pt"
+        android:text="올해의 목표는 무엇인가요?" />
+
+    <EditText
+        android:id="@+id/editTextTextPersonName"
+        android:layout_width="match_parent"
+        android:layout_height="150dp"
+        android:layout_marginTop="5dp"
+        android:layout_marginBottom="5dp"
+        android:ems="10"
+        android:hint="스프링 마스터 되기"
+        android:background="@drawable/memo_bg"
+        android:inputType="textMultiLine"
+        android:lines="5"
+        android:minLines="3"
+        android:maxLines="6"
+        android:scrollbars="vertical"/>
+
+    <Button
+        android:id="@+id/saveBtn_yearly_goal"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="right"
+        android:layout_marginTop="5dp"
+        android:layout_marginBottom="5dp"
+        android:minWidth="0dp"
+        android:minHeight="0dp"
+        android:textColor="@color/deep_gray"
+        android:textStyle="bold"
+        android:backgroundTint="@color/bright_gray"
+        android:text="목표 저장" />
+
+    <Button
+        android:id="@+id/nextYearBtn"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:layout_margin="5dp"
+        android:minWidth="0dp"
+        android:minHeight="0dp"
+        android:paddingLeft="15dp"
+        android:background="@color/white"
+        android:shadowColor="@color/deep_gray"
+        android:elevation="20dp"
+        android:textColor="@color/deep_gray"
+        android:textSize="7pt"
+        android:paddingTop="10dp"
+        android:paddingBottom="10dp"
+        android:textAlignment="textStart"
+        android:text="2022" />
+
+    <Button
+        android:id="@+id/nnextYearBtn"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:layout_margin="5dp"
+        android:minWidth="0dp"
+        android:minHeight="0dp"
+        android:paddingLeft="15dp"
+        android:background="@color/white"
+        android:shadowColor="@color/deep_gray"
+        android:elevation="20dp"
+        android:textColor="@color/deep_gray"
+        android:textSize="7pt"
+        android:paddingTop="10dp"
+        android:paddingBottom="10dp"
+        android:textAlignment="textStart"
+        android:text="2023" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/button_back"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom"
+            android:layout_marginTop="5dp"
+            android:layout_marginBottom="5dp"
+            android:backgroundTint="@color/deepBlue"
+            android:minWidth="0dp"
+            android:minHeight="0dp"
+            android:padding="15dp"
+            android:text="Back"
+            android:textColor="@color/white"
+            android:textSize="8pt" />
+
+        <Button
+            android:id="@+id/button_next"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom"
+            android:layout_marginTop="5dp"
+            android:layout_marginBottom="5dp"
+            android:backgroundTint="@color/deepBlue"
+            android:minWidth="0dp"
+            android:minHeight="0dp"
+            android:padding="15dp"
+            android:text="Next"
+            android:textColor="@color/white"
+            android:textSize="8pt" />
+    </LinearLayout>
+</LinearLayout>

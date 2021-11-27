@@ -3,8 +3,13 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/Users/USER/AndroidStudioProjects/Android class/Termproject/Big_Picture/app/src/main/res/drawable/button1.xml" value="0.4361111111111111" />
+        <entry key="..\:/Users/USER/AndroidStudioProjects/Android class/Termproject/Big_Picture/app/src/main/res/drawable/button_back.xml" value="0.4361111111111111" />
+        <entry key="..\:/Users/USER/AndroidStudioProjects/Android class/Termproject/Big_Picture/app/src/main/res/drawable/date_bg.xml" value="0.4361111111111111" />
+        <entry key="..\:/Users/USER/AndroidStudioProjects/Android class/Termproject/Big_Picture/app/src/main/res/drawable/memo_bg.xml" value="0.4361111111111111" />
         <entry key="..\:/Users/USER/AndroidStudioProjects/Android class/Termproject/Big_Picture/app/src/main/res/layout/activity_main.xml" value="0.20462962962962963" />
         <entry key="..\:/Users/USER/AndroidStudioProjects/Android class/Termproject/Big_Picture/app/src/main/res/layout/home.xml" value="0.20185185185185187" />
+        <entry key="..\:/Users/USER/AndroidStudioProjects/Android class/Termproject/Big_Picture/app/src/main/res/layout/yearly.xml" value="0.2793819655521783" />
       </map>
     </option>
   </component>

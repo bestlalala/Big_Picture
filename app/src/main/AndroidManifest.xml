@@ -10,6 +10,15 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Big_Picture">
         <activity
+            android:name=".HomeActivity"
+            android:exported="true" />
+        <activity
+            android:name=".CategoryActivity"
+            android:exported="true" />
+        <activity
+            android:name=".YearlyActivity"
+            android:exported="true" />
+        <activity
             android:name=".MainActivity"
             android:exported="true">
             <intent-filter>

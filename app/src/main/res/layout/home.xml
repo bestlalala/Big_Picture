@@ -34,8 +34,10 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
+        android:layout_marginBottom="10dp"
         android:width="250dp"
         android:height="50dp"
+        android:background="@drawable/bluebutton"
         android:backgroundTint="@color/yellow"
         android:text="목표설정"
         android:textColor="@color/black" />
@@ -48,6 +50,7 @@
         android:height="50dp"
         android:layout_gravity="center_horizontal"
         android:layout_marginBottom="60dp"
+        android:background="@drawable/bluebutton"
         android:backgroundTint="@color/yellow"
         android:textColor="@color/black"
 

@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Big_Picture</string>
+    <string name="app_name">Big Picture</string>
     <string name="welcome">WELCOME\nTO</string>
     <string name="welcomeText">‘빅 픽쳐’에 오신 것을 환영합니다!\n당신의 큰 그림은 무엇인가요?</string>
     <string name="homeText">당신의 멋진 큰 그림을 위해\n먼저 스케치 해 봐요!</string>

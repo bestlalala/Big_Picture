@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.LinearLayout;
 
 import java.util.ArrayList;
@@ -12,13 +13,16 @@ import java.util.ArrayList;
 import petrov.kristiyan.colorpicker.ColorPicker;
 
 public class CategoryActivity extends AppCompatActivity {
-    private LinearLayout layout;
     Button button;
+    EditText categoryName, categoryTodo;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.category);
+
+        categoryName = findViewById(R.id.categoryName);
+        categoryTodo = findViewById(R.id.category_todo);
 
         button = findViewById(R.id.button3);
         button.setOnClickListener(new View.OnClickListener() {
@@ -55,7 +59,7 @@ public class CategoryActivity extends AppCompatActivity {
                 .setOnChooseColorListener(new ColorPicker.OnChooseColorListener() {
                     @Override
                     public void onChooseColor(int position, int color) {
-                        layout.setBackgroundColor(color);  // OK 버튼 클릭 시 이벤트
+                        categoryName.setBackgroundColor(color);  // OK 버튼 클릭 시 이벤트
                     }
 
                     @Override

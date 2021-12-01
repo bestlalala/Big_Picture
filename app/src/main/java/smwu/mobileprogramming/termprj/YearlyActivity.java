@@ -10,11 +10,16 @@ import android.widget.Button;
 public class YearlyActivity extends AppCompatActivity {
     Button backBtn, nextBtn;
     Button nextYear, nnextYear;
+    FragmentYearly fragmentYearly;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.yearly);
+
+        fragmentYearly = new FragmentYearly();
+
+        getSupportFragmentManager().beginTransaction().add(R.id.frame, fragmentYearly).commit();
 
         backBtn = findViewById(R.id.button_back);
         backBtn.setOnClickListener(new View.OnClickListener() {

@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/container"
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -16,58 +17,12 @@
         android:textSize="12pt"
         android:text="연도별 목표 설정" />
 
-    <TextView
-        android:id="@+id/thisYear"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="5dp"
-        android:layout_marginBottom="5dp"
-        android:textColor="@color/black"
-        android:textStyle="bold"
-        android:textSize="9pt"
-        android:background="@drawable/date_bg"
-        android:paddingLeft="10dp"
-        android:paddingRight="10dp"
-        android:text="2021" />
-
-    <TextView
-        android:id="@+id/whatIs_goal"
+    <FrameLayout
+        android:id="@+id/frame"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="5dp"
-        android:layout_marginBottom="5dp"
-        android:textColor="@color/black"
-        android:textSize="8pt"
-        android:text="올해의 목표는 무엇인가요?" />
+        android:layout_height="wrap_content" >
 
-    <EditText
-        android:id="@+id/editTextTextPersonName"
-        android:layout_width="match_parent"
-        android:layout_height="150dp"
-        android:layout_margin="5dp"
-        android:ems="10"
-        android:hint="스프링 마스터 되기"
-        android:elevation="5dp"
-        android:background="@drawable/memo_bg"
-        android:inputType="textMultiLine"
-        android:lines="5"
-        android:minLines="3"
-        android:maxLines="6"
-        android:scrollbars="vertical"/>
-
-    <Button
-        android:id="@+id/saveBtn_yearly_goal"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="right"
-        android:layout_marginTop="5dp"
-        android:layout_marginBottom="5dp"
-        android:minWidth="0dp"
-        android:minHeight="0dp"
-        android:textColor="@color/deep_gray"
-        android:textStyle="bold"
-        android:backgroundTint="@color/bright_gray"
-        android:text="목표 저장" />
+    </FrameLayout>
 
     <Button
         android:id="@+id/nextYearBtn"
@@ -116,11 +71,11 @@
             android:layout_height="wrap_content"
             android:layout_gravity="bottom"
             android:layout_marginTop="5dp"
-            android:layout_marginBottom="5dp"
             android:layout_marginRight="90dp"
+            android:layout_marginBottom="5dp"
             android:background="@drawable/bluebutton"
             android:minWidth="0dp"
-            android:minHeight="0dp"
+            android:minHeight="48dp"
             android:text="Back"
             android:textColor="@color/white"
             android:textSize="8pt" />
@@ -130,12 +85,12 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="bottom"
+            android:layout_marginLeft="90dp"
             android:layout_marginTop="5dp"
             android:layout_marginBottom="5dp"
-            android:layout_marginLeft="90dp"
             android:background="@drawable/bluebutton"
             android:minWidth="0dp"
-            android:minHeight="0dp"
+            android:minHeight="48dp"
             android:text="Next"
             android:textColor="@color/white"
             android:textSize="8pt" />

@@ -50,8 +50,11 @@
         android:layout_height="wrap_content"
         android:width="225dp"
         android:height="50dp"
+        android:minWidth="0dp"
+        android:minHeight="0dp"
         android:layout_gravity="center_horizontal"
         android:layout_weight="1"
+        android:background="@drawable/bluebutton"
         android:backgroundTint="@color/yellow"
         android:text="Start"
         android:textColor="@color/black" />

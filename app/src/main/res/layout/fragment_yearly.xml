@@ -29,10 +29,11 @@
         android:text="올해의 목표는 무엇인가요?" />
 
     <EditText
-        android:id="@+id/editTextTextPersonName"
+        android:id="@+id/editText_yearly_goal"
         android:layout_width="match_parent"
         android:layout_height="150dp"
         android:layout_margin="5dp"
+        android:padding="10dp"
         android:ems="10"
         android:hint="스프링 마스터 되기"
         android:elevation="5dp"

@@ -11,6 +11,11 @@ public class YearlyPlan {
         this.goalText = goalText;
     }
 
+    public YearlyPlan(int year, String goalText) {
+        this.year = year;
+        this.goalText = goalText;
+    }
+
     public int getYear() {
         return year;
     }
@@ -25,5 +30,13 @@ public class YearlyPlan {
 
     public void setGoalText(String goalText) {
         this.goalText = goalText;
+    }
+
+    @Override
+    public String toString() {
+        return "YearlyPlan{" +
+                "year='" + year + '\'' +
+                ", goalText='" + goalText + '\'' +
+                '}';
     }
 }

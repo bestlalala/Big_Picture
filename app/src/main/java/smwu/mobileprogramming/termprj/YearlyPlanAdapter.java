@@ -1,11 +1,13 @@
 package smwu.mobileprogramming.termprj;
 
+import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
@@ -13,7 +15,7 @@ import java.util.ArrayList;
 public class YearlyPlanAdapter extends RecyclerView.Adapter<YearlyPlanAdapter.ViewHolder> implements OnYearlyItemClickListener {
     ArrayList<YearlyPlan> items = new ArrayList<YearlyPlan>();
     OnYearlyItemClickListener listener;
-
+    int row_index=-1;
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
@@ -27,6 +29,7 @@ public class YearlyPlanAdapter extends RecyclerView.Adapter<YearlyPlanAdapter.Vi
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         YearlyPlan item =items.get(position);
         holder.setItem(item);
+
     }
 
     @Override
@@ -63,6 +66,7 @@ public class YearlyPlanAdapter extends RecyclerView.Adapter<YearlyPlanAdapter.Vi
 
     static class ViewHolder extends RecyclerView.ViewHolder{
         TextView textView, textView2;
+        CardView cardView;
 
         public ViewHolder(View itemView, final OnYearlyItemClickListener listener) {
             super(itemView);
@@ -74,6 +78,8 @@ public class YearlyPlanAdapter extends RecyclerView.Adapter<YearlyPlanAdapter.Vi
                 @Override
                 public void onClick(View view) {
                     int position = getAdapterPosition();
+                    cardView = view.findViewById(R.id.itemCard);
+                    cardView.setBackgroundColor(Color.LTGRAY);
 
                     if (listener != null) { // 아이템 뷰 클릭 시 미리 정의한 다른 리스너의 메서드 호출하기
                         listener.onItemClick(ViewHolder.this, view, position);

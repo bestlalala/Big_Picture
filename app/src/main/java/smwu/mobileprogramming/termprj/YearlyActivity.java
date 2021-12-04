@@ -1,24 +1,30 @@
 package smwu.mobileprogramming.termprj;
 
+import static smwu.mobileprogramming.termprj.GoalDatabase.TAG;
+
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
 
-public class YearlyActivity extends AppCompatActivity {
+public class YearlyActivity extends AppCompatActivity implements OnDatabaseCallback {
     Button backBtn, nextBtn;
     FragmentYearly fragmentYearly;
+    EditText goalText;
     RecyclerView recyclerView;
     LinearLayoutManager layoutManager;
     YearlyPlanAdapter adapter;
@@ -28,6 +34,8 @@ public class YearlyActivity extends AppCompatActivity {
     SimpleDateFormat yearFormat;
 
     String thisYear, nextYear, nnextYear;
+
+    GoalDatabase database;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -42,6 +50,18 @@ public class YearlyActivity extends AppCompatActivity {
         fragmentYearly = new FragmentYearly();
         getSupportFragmentManager().beginTransaction().add(R.id.frame, fragmentYearly).commit();
 
+        goalText = findViewById(R.id.editText_yearly_goal);
+
+        // 입력한 목표를 데이터베이스에 저장하기
+        Button saveBtn = findViewById(R.id.saveBtn_yearly_goal);
+        saveBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                insert(thisyearText.getText().toString(), goalText.getText().toString());
+            }
+        });
+
+        // RecyclerView
         recyclerView = findViewById(R.id.recyclerView);
         layoutManager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
         recyclerView.setLayoutManager(layoutManager);
@@ -92,5 +112,42 @@ public class YearlyActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+
+        // open database
+        if (database != null) {
+            database.close();
+            database = null;
+        }
+
+        database = GoalDatabase.getInstance(this);
+        boolean isOpen = database.open();
+        if (isOpen) {
+            Log.d(TAG, "Goal database is open.");
+        } else {
+            Log.d(TAG, "Goal database is not open.");
+        }
+    }
+
+    protected void onDestroy() {
+        // close database
+        if (database != null) {
+            database.close();
+            database = null;
+        }
+        super.onDestroy();
+    }
+
+    @Override
+    public void insert(String year, String goalText) {
+        database.insertRecordYearly(year, goalText);
+        Toast.makeText(getApplicationContext(), "연도별 목표를 추가했습니다.", Toast.LENGTH_LONG).show();
+    }
+
+    @Override
+    public ArrayList<YearlyPlan> selectAll() {
+        ArrayList<YearlyPlan> result = database.selectAll();
+        Toast.makeText(getApplicationContext(), "연도별 목표를 조회했습니다.", Toast.LENGTH_LONG).show();
+
+        return result;
     }
 }

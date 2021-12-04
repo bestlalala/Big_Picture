@@ -8,7 +8,13 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.TextView;
 import android.widget.Toast;
+
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.Locale;
 
 public class YearlyActivity extends AppCompatActivity {
     Button backBtn, nextBtn;
@@ -16,12 +22,23 @@ public class YearlyActivity extends AppCompatActivity {
     RecyclerView recyclerView;
     LinearLayoutManager layoutManager;
     YearlyPlanAdapter adapter;
+    TextView thisyearText;
 
+    Date currentTime;
+    SimpleDateFormat yearFormat;
+
+    String thisYear, nextYear, nnextYear;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.yearly);
 
+        // 올해 연도 구하기
+        currentTime = Calendar.getInstance().getTime();
+        yearFormat = new SimpleDateFormat("yyyy", Locale.KOREA);
+        thisYear = yearFormat.format(currentTime);
+
+        thisyearText = findViewById(R.id.thisYear);
         fragmentYearly = new FragmentYearly();
         getSupportFragmentManager().beginTransaction().add(R.id.frame, fragmentYearly).commit();
 
@@ -31,8 +48,8 @@ public class YearlyActivity extends AppCompatActivity {
 
         adapter = new YearlyPlanAdapter();
 
-        adapter.addItem(new YearlyPlan(2022, "2022년 계획"));
-        adapter.addItem(new YearlyPlan(2023, "2023년 계획"));
+        adapter.addItem(new YearlyPlan(1, Integer.valueOf(thisYear)+1, Integer.valueOf(thisYear)+1+"년 계획"));
+        adapter.addItem(new YearlyPlan(2, Integer.valueOf(thisYear)+2, Integer.valueOf(thisYear)+2+"년 계획"));
 
         recyclerView.setAdapter(adapter);
 
@@ -40,8 +57,20 @@ public class YearlyActivity extends AppCompatActivity {
             @Override
             public void onItemClick(YearlyPlanAdapter.ViewHolder holder, View view, int position) {
                 YearlyPlan item = adapter.getItem(position);
+                // Fragment 해당 연도로 바꿔야 함.
 
-                Toast.makeText(getApplicationContext(), "연도 선택됨"+item.getYear(), Toast.LENGTH_SHORT).show();
+                switch (item._id){
+                    case 1:
+                        nextYear = String.valueOf(Integer.valueOf(thisYear)+1);
+                        thisyearText = findViewById(R.id.thisYear);
+                        thisyearText.setText(nextYear);
+                        break;
+                    case 2:
+                        nnextYear = String.valueOf(Integer.valueOf(thisYear)+2);
+                        thisyearText = findViewById(R.id.thisYear);
+                        thisyearText.setText(nnextYear);
+                        break;
+                }
             }
         });
 

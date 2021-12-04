@@ -1,10 +1,12 @@
 package smwu.mobileprogramming.termprj;
 
 public class YearlyPlan {
+    int _id;
     int year;
     String goalText;
 
-    public YearlyPlan(int year, String goalText) {
+    public YearlyPlan(int _id, int year, String goalText) {
+        this._id = _id;
         this.year = year;
         this.goalText = goalText;
     }

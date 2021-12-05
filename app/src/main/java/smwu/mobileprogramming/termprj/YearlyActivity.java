@@ -1,5 +1,6 @@
 package smwu.mobileprogramming.termprj;
 
+import static java.sql.DriverManager.println;
 import static smwu.mobileprogramming.termprj.GoalDatabase.TAG;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -7,7 +8,9 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
+import android.database.Cursor;
 import android.os.Bundle;
+import android.os.Handler;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -29,13 +32,12 @@ public class YearlyActivity extends AppCompatActivity implements OnDatabaseCallb
     YearlyPlanAdapter adapter;
 
     TextView thisyearText;
-    EditText goalText;
-    Button backBtn, nextBtn;
+    Button thisyearBtn, backBtn, nextBtn;
 
-    Date currentTime;
-    SimpleDateFormat yearFormat;
-
-    String thisYear, nextYear, nnextYear;
+    // 올해 연도 구하기
+    public static Date currentTime = Calendar.getInstance().getTime();
+    public static SimpleDateFormat yearFormat = new SimpleDateFormat("yyyy", Locale.KOREA);
+    public static String thisYear = yearFormat.format(currentTime);
 
     GoalDatabase database;
     @Override
@@ -43,15 +45,19 @@ public class YearlyActivity extends AppCompatActivity implements OnDatabaseCallb
         super.onCreate(savedInstanceState);
         setContentView(R.layout.yearly);
 
-        // 올해 연도 구하기
-        currentTime = Calendar.getInstance().getTime();
-        yearFormat = new SimpleDateFormat("yyyy", Locale.KOREA);
-        thisYear = yearFormat.format(currentTime);
-
         // 목표 입력하는 Fragment 띄우기
         thisyearText = findViewById(R.id.thisYear);
         fragmentYearly = new FragmentYearly();
         getSupportFragmentManager().beginTransaction().add(R.id.frame, fragmentYearly).commit();
+
+        thisyearBtn = findViewById(R.id.thisYearGoal);
+        thisyearBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                fragmentYearly.thisyearText.setText(thisYear);
+                executeQueryForThisYear();
+            }
+        });
 
         // RecyclerView
         recyclerView = findViewById(R.id.recyclerView);
@@ -60,8 +66,8 @@ public class YearlyActivity extends AppCompatActivity implements OnDatabaseCallb
 
         adapter = new YearlyPlanAdapter();
 
-        adapter.addItem(new YearlyPlan(1, Integer.valueOf(thisYear)+1, Integer.valueOf(thisYear)+1+"년 계획"));
-        adapter.addItem(new YearlyPlan(2, Integer.valueOf(thisYear)+2, Integer.valueOf(thisYear)+2+"년 계획"));
+        adapter.addItem(new YearlyPlan(1, Integer.valueOf(thisYear)+1, ""));
+        adapter.addItem(new YearlyPlan(2, Integer.valueOf(thisYear)+2, ""));
 
         recyclerView.setAdapter(adapter);
 
@@ -69,27 +75,11 @@ public class YearlyActivity extends AppCompatActivity implements OnDatabaseCallb
             @Override
             public void onItemClick(YearlyPlanAdapter.ViewHolder holder, View view, int position) {
                 YearlyPlan item = adapter.getItem(position);
-                // Fragment 해당 연도로 바꿔야 함.
-
-                switch (item._id){
-                    case 1:
-                        nextYear = String.valueOf(Integer.valueOf(thisYear)+1);
-                        thisyearText = findViewById(R.id.thisYear);
-                        thisyearText.setText(nextYear);
-                        goalText = findViewById(R.id.editText_yearly_goal);
-                        goalText.setText("");
-                        break;
-                    case 2:
-                        nnextYear = String.valueOf(Integer.valueOf(thisYear)+2);
-                        thisyearText = findViewById(R.id.thisYear);
-                        thisyearText.setText(nnextYear);
-                        goalText = findViewById(R.id.editText_yearly_goal);
-                        goalText.setText("");
-                        break;
-                }
+                Toast.makeText(getApplicationContext(), "아이템 선택됨: " + item.getYear(), Toast.LENGTH_LONG).show();
+                executeQuery(item);
+                fragmentYearly.resetGoalText(item);
             }
         });
-
 
         backBtn = findViewById(R.id.button_back);
         backBtn.setOnClickListener(new View.OnClickListener() {
@@ -146,4 +136,36 @@ public class YearlyActivity extends AppCompatActivity implements OnDatabaseCallb
 
         return result;
     }
+    public void executeQueryForThisYear() {
+        Cursor cursor = database.rawQuery("select _id, year, goal from YEARLY_GOAL");
+        for (int i = 0; i< cursor.getCount(); i++) {
+            cursor.moveToNext();
+            int id = cursor.getInt(0);
+            int year = cursor.getInt(1);
+            String goalText = cursor.getString(2);
+            if (year == Integer.valueOf(thisYear))
+                fragmentYearly.goalText.setText(goalText);
+
+            // Test code
+            Log.d(TAG, "레코드#" + i + " : " + id + ", " + year + ", " + goalText);
+        }
+        cursor.close();
+    }
+
+    public void executeQuery(YearlyPlan item) {
+        Cursor cursor = database.rawQuery("select _id, year, goal from YEARLY_GOAL");
+        for (int i = 0; i< cursor.getCount(); i++) {
+            cursor.moveToNext();
+            int id = cursor.getInt(0);
+            int year = cursor.getInt(1);
+            String goalText = cursor.getString(2);
+            if (year == item.getYear())
+                item.setGoalText(goalText);
+
+            // Test code
+            Log.d(TAG, "레코드#" + i + " : " + id + ", " + year + ", " + goalText);
+        }
+        cursor.close();
+    }
+
 }

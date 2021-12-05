@@ -14,13 +14,19 @@ public class GoalDatabase {
 
     public static final String TAG = "GoalDataBase";
 
-    // singleton instance
+    /**
+     * singleton instance
+     */
     public static GoalDatabase database;
 
-    // database name
+    /**
+     * database name
+     */
     public static String DATABASE_NAME = "goal.db";
 
-    // table name
+    /**
+     * table name
+     */
     public static String TABLE_YEARLY = "YEARLY_GOAL";
     public static String TABLE_MONTHLY = "MONTHLY_GOAL";
     public static String TABLE_WEEKLY = "WEEKLY_GOAL";
@@ -133,6 +139,7 @@ public class GoalDatabase {
             }
                 // insert records
                 insertRecordYearly(_db, "2021", "모프 A+ 받기");
+                insertRecordYearly(_db, "2022", "우수장학금 받기");
 
             // TABLE_MONTHLY_GOAL
 

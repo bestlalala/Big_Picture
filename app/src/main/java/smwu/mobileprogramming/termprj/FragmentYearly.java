@@ -1,8 +1,14 @@
 package smwu.mobileprogramming.termprj;
 
+import static smwu.mobileprogramming.termprj.YearlyActivity.thisYear;
+
 import android.app.Activity;
 import android.content.Context;
+import android.database.Cursor;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,6 +19,7 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 
 import org.w3c.dom.Text;
@@ -45,7 +52,10 @@ public class FragmentYearly extends Fragment {
         saveBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                // 원래 없으면 새로 생성해서 삽입
                 in.insert(thisyearText.getText().toString(), goalText.getText().toString());
+
+                // 원래 있으면 업데이트
             }
         });
 
@@ -55,7 +65,10 @@ public class FragmentYearly extends Fragment {
     }
 
     private void initUI(ViewGroup rootView){
-
     }
 
+    public void resetGoalText(YearlyPlan item) {
+        thisyearText.setText(String.valueOf(item.getYear()));
+        goalText.setText(item.getGoalText());
+    }
 }

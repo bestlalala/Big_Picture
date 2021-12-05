@@ -42,6 +42,7 @@
         android:lines="5"
         android:minLines="3"
         android:maxLines="6"
+        android:privateImeOptions="defaultInputmode=korean"
         android:scrollbars="vertical"/>
 
     <Button

@@ -22,13 +22,15 @@ import java.util.Date;
 import java.util.Locale;
 
 public class YearlyActivity extends AppCompatActivity implements OnDatabaseCallback {
-    Button backBtn, nextBtn;
+
     FragmentYearly fragmentYearly;
-    EditText goalText;
     RecyclerView recyclerView;
     LinearLayoutManager layoutManager;
     YearlyPlanAdapter adapter;
+
     TextView thisyearText;
+    EditText goalText;
+    Button backBtn, nextBtn;
 
     Date currentTime;
     SimpleDateFormat yearFormat;
@@ -46,20 +48,10 @@ public class YearlyActivity extends AppCompatActivity implements OnDatabaseCallb
         yearFormat = new SimpleDateFormat("yyyy", Locale.KOREA);
         thisYear = yearFormat.format(currentTime);
 
+        // 목표 입력하는 Fragment 띄우기
         thisyearText = findViewById(R.id.thisYear);
         fragmentYearly = new FragmentYearly();
         getSupportFragmentManager().beginTransaction().add(R.id.frame, fragmentYearly).commit();
-
-        goalText = findViewById(R.id.editText_yearly_goal);
-
-        // 입력한 목표를 데이터베이스에 저장하기
-        Button saveBtn = findViewById(R.id.saveBtn_yearly_goal);
-        saveBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                insert(thisyearText.getText().toString(), goalText.getText().toString());
-            }
-        });
 
         // RecyclerView
         recyclerView = findViewById(R.id.recyclerView);
@@ -84,11 +76,15 @@ public class YearlyActivity extends AppCompatActivity implements OnDatabaseCallb
                         nextYear = String.valueOf(Integer.valueOf(thisYear)+1);
                         thisyearText = findViewById(R.id.thisYear);
                         thisyearText.setText(nextYear);
+                        goalText = findViewById(R.id.editText_yearly_goal);
+                        goalText.setText("");
                         break;
                     case 2:
                         nnextYear = String.valueOf(Integer.valueOf(thisYear)+2);
                         thisyearText = findViewById(R.id.thisYear);
                         thisyearText.setText(nnextYear);
+                        goalText = findViewById(R.id.editText_yearly_goal);
+                        goalText.setText("");
                         break;
                 }
             }

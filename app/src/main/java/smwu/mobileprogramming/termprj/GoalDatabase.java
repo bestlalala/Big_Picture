@@ -142,8 +142,58 @@ public class GoalDatabase {
                 insertRecordYearly(_db, "2022", "우수장학금 받기");
 
             // TABLE_MONTHLY_GOAL
+            println("creating table [" + TABLE_YEARLY + "].");
+
+            // drop existing table
+            String DROP_SQL2 = "drop table if exists " + TABLE_MONTHLY;
+            try {
+                _db.execSQL(DROP_SQL2);
+            } catch (Exception ex) {
+                Log.e(TAG, "Exception in DROP_SQL2", ex);
+            }
+
+            // create table
+            String CREATE_SQL2 = "create table " + TABLE_MONTHLY+ "("
+                    + " _id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT, "
+                    + " MONTH TEXT, "
+                    + " GOAL TEXT, "
+                    + " CREATE_DATE TIMESTAMP DEFAULT CURRENT_TIMESTAMP "
+                    + ")";
+            try {
+                _db.execSQL(CREATE_SQL2);
+            } catch (Exception ex) {
+                Log.e(TAG, "Exception in CREATE_SQL2", ex);
+            }
+            // insert records
+            insertRecordMonthly("12", "학기 마무리 잘하기");
 
             // TABLE_WEEKLY_GOAL
+            println("creating table [" + TABLE_YEARLY + "].");
+
+            // drop existing table
+            String DROP_SQL3 = "drop table if exists " + TABLE_WEEKLY;
+            try {
+                _db.execSQL(DROP_SQL3);
+            } catch (Exception ex) {
+                Log.e(TAG, "Exception in DROP_SQL3", ex);
+            }
+
+            // create table
+            String CREATE_SQL3 = "create table " + TABLE_WEEKLY+ "("
+                    + " _id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT, "
+                    + " WEEK TEXT, "
+                    + " CATEGORY_TITLE TEXT, "
+                    + " CATEGORY_COLOR TEXT, "
+                    + " CATEGORY_CONTENT, "
+                    + " CREATE_DATE TIMESTAMP DEFAULT CURRENT_TIMESTAMP "
+                    + ")";
+            try {
+                _db.execSQL(CREATE_SQL3);
+            } catch (Exception ex) {
+                Log.e(TAG, "Exception in CREATE_SQL3", ex);
+            }
+            // insert records
+            insertRecordMonthly("12", "학기 마무리 잘하기");
 
         }
         public void onOpen(SQLiteDatabase db) {
@@ -177,6 +227,14 @@ public class GoalDatabase {
         }
     }
 
+    public void insertRecordMonthly( String month, String goalText) {
+        try {
+            db.execSQL( "insert into " + TABLE_MONTHLY + "(MONTH, GOAL) values ('" + month + "', '" + goalText + "');" );
+        } catch(Exception ex) {
+            Log.e(TAG, "Exception in executing insert SQL.", ex);
+        }
+    }
+
     public void updateRecordYearly(String year, String goalText) {
         try {
             db.execSQL("UPDATE " + TABLE_YEARLY
@@ -187,26 +245,15 @@ public class GoalDatabase {
             Log.e(TAG, "Exception in executing update SAL.", ex);
         }
     }
-
-    public ArrayList<YearlyPlan> selectAll() {
-        ArrayList<YearlyPlan> result = new ArrayList<YearlyPlan>();
-
+    public void updateRecordMonthly(String month, String goalText) {
         try {
-            Cursor cursor = db.rawQuery("select YEAR, GOAL from " + TABLE_YEARLY, null);
-            for (int i = 0; i < cursor.getCount(); i++) {
-                cursor.moveToNext();
-                int year = cursor.getInt(0);
-                String goalText = cursor.getString(1);
-
-                YearlyPlan yearlyPlan = new YearlyPlan(year, goalText);
-                result.add(yearlyPlan);
-            }
-
-        } catch(Exception ex) {
-            Log.e(TAG, "Exception in executing insert SQL.", ex);
+            db.execSQL("UPDATE " + TABLE_MONTHLY
+                    + " SET "
+                    + "GOAL=" + "('" + goalText + "')"
+                + " WHERE " + "MONTH=" + month);
+        } catch (Exception ex) {
+            Log.e(TAG, "Exception in executing update SAL.", ex);
         }
-
-        return result;
     }
 
     private void println(String msg) {

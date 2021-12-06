@@ -1,6 +1,5 @@
 package smwu.mobileprogramming.termprj;
 
-import static java.sql.DriverManager.println;
 import static smwu.mobileprogramming.termprj.GoalDatabase.TAG;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -10,16 +9,13 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
-import android.os.Handler;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
@@ -35,7 +31,8 @@ public class YearlyActivity extends AppCompatActivity implements OnDatabaseCallb
     Button thisyearBtn, backBtn, nextBtn;
 
     // 올해 연도 구하기
-    public static Date currentTime = Calendar.getInstance().getTime();
+    public static Calendar cal = Calendar.getInstance();
+    public static Date currentTime = cal.getTime();
     public static SimpleDateFormat yearFormat = new SimpleDateFormat("yyyy", Locale.KOREA);
     public static String thisYear = yearFormat.format(currentTime);
 
@@ -71,13 +68,17 @@ public class YearlyActivity extends AppCompatActivity implements OnDatabaseCallb
 
         recyclerView.setAdapter(adapter);
 
-        adapter.setOnItemClickListener(new OnYearlyItemClickListener() {
+        adapter.setOnItemClickListener(new OnItemClickListener() {
             @Override
-            public void onItemClick(YearlyPlanAdapter.ViewHolder holder, View view, int position) {
+            public void onYearlyItemClick(YearlyPlanAdapter.ViewHolder holder, View view, int position) {
                 YearlyPlan item = adapter.getItem(position);
                 Toast.makeText(getApplicationContext(), "아이템 선택됨: " + item.getYear(), Toast.LENGTH_LONG).show();
                 executeQuery(item);
                 fragmentYearly.resetGoalText(item);
+            }
+
+            @Override
+            public void onMonthlyItemClick(MonthlyPlanAdapter.ViewHolder holder, View view, int position) {
             }
         });
 
@@ -94,7 +95,7 @@ public class YearlyActivity extends AppCompatActivity implements OnDatabaseCallb
         nextBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(getApplicationContext(), CategoryActivity.class); // MonthlyActivity로 수정해야 함.
+                Intent intent = new Intent(getApplicationContext(), MonthlyActivity.class); // MonthlyActivity로 수정해야 함.
                 startActivity(intent);
             }
         });
@@ -135,13 +136,6 @@ public class YearlyActivity extends AppCompatActivity implements OnDatabaseCallb
         Toast.makeText(getApplicationContext(), "연도별 목표를 수정했습니다.", Toast.LENGTH_LONG).show();
     }
 
-    @Override
-    public ArrayList<YearlyPlan> selectAll() {
-        ArrayList<YearlyPlan> result = database.selectAll();
-        Toast.makeText(getApplicationContext(), "연도별 목표를 조회했습니다.", Toast.LENGTH_LONG).show();
-
-        return result;
-    }
     public void executeQueryForThisYear() {
         Cursor cursor = database.rawQuery("select _id, year, goal from YEARLY_GOAL");
         for (int i = 0; i< cursor.getCount(); i++) {

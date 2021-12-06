@@ -10,8 +10,8 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
 
-public class YearlyPlanAdapter extends RecyclerView.Adapter<YearlyPlanAdapter.ViewHolder> implements OnItemClickListener {
-    ArrayList<YearlyPlan> items = new ArrayList<YearlyPlan>();
+public class MonthlyPlanAdapter extends RecyclerView.Adapter<MonthlyPlanAdapter.ViewHolder> implements OnItemClickListener {
+    ArrayList<MonthlyPlan> items = new ArrayList<MonthlyPlan>();
     OnItemClickListener listener;
 
     @NonNull
@@ -25,7 +25,7 @@ public class YearlyPlanAdapter extends RecyclerView.Adapter<YearlyPlanAdapter.Vi
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        YearlyPlan item =items.get(position);
+        MonthlyPlan item =items.get(position);
         holder.setItem(item);
     }
 
@@ -34,19 +34,19 @@ public class YearlyPlanAdapter extends RecyclerView.Adapter<YearlyPlanAdapter.Vi
         return items.size();
     }
 
-    public void addItem(YearlyPlan item) {
+    public void addItem(MonthlyPlan item) {
         items.add(item);
     }
 
-    public void setItems(ArrayList<YearlyPlan> items) {
+    public void setItems(ArrayList<MonthlyPlan> items) {
         this.items = items;
     }
 
-    public YearlyPlan getItem(int position) {
+    public MonthlyPlan getItem(int position) {
         return items.get(position);
     }
 
-    public void setItem(int position, YearlyPlan item) {
+    public void setItem(int position, MonthlyPlan item) {
         items.set(position, item);
     }
 
@@ -55,14 +55,14 @@ public class YearlyPlanAdapter extends RecyclerView.Adapter<YearlyPlanAdapter.Vi
     }
 
     @Override
-    public void onYearlyItemClick(ViewHolder holder, View view, int position) {
+    public void onMonthlyItemClick(ViewHolder holder, View view, int position) {
         if (listener != null) {
-            listener.onYearlyItemClick(holder, view, position);
+            listener.onMonthlyItemClick(holder, view, position);
         }
     }
 
     @Override
-    public void onMonthlyItemClick(MonthlyPlanAdapter.ViewHolder holder, View view, int position) {    }
+    public void onYearlyItemClick(YearlyPlanAdapter.ViewHolder holder, View view, int position) { }
 
     static class ViewHolder extends RecyclerView.ViewHolder{
         TextView textView, textView2;
@@ -79,15 +79,15 @@ public class YearlyPlanAdapter extends RecyclerView.Adapter<YearlyPlanAdapter.Vi
                     int position = getAdapterPosition();
 
                     if (listener != null) { // 아이템 뷰 클릭 시 미리 정의한 다른 리스너의 메서드 호출하기
-                        listener.onYearlyItemClick(ViewHolder.this, view, position);
+                        listener.onMonthlyItemClick(ViewHolder.this, view, position);
                     }
                 }
             });
 
         }
 
-        public void setItem(YearlyPlan item) {
-            textView.setText(String.valueOf(item.getYear()));
+        public void setItem(MonthlyPlan item) {
+            textView.setText(String.valueOf(item.getMonth()));
             textView2.setText(item.getGoalText());
         }
 

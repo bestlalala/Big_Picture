@@ -1,13 +1,11 @@
 package smwu.mobileprogramming.termprj;
 
 import static smwu.mobileprogramming.termprj.GoalDatabase.TAG;
-import static smwu.mobileprogramming.termprj.YearlyActivity.cal;
 import static smwu.mobileprogramming.termprj.YearlyActivity.currentTime;
 
 import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
-import android.os.Handler;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -19,8 +17,6 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.Locale;
 
 public class MonthlyActivity extends AppCompatActivity implements OnDatabaseCallback {
@@ -36,8 +32,6 @@ public class MonthlyActivity extends AppCompatActivity implements OnDatabaseCall
     // 이번 달 구하기
     public static SimpleDateFormat monthFormat = new SimpleDateFormat("mm", Locale.KOREA);
     public static String thisMonth = monthFormat.format(currentTime);
-    public Calendar cal = Calendar.getInstance();
-
 
     GoalDatabase database;
     @Override
@@ -65,10 +59,6 @@ public class MonthlyActivity extends AppCompatActivity implements OnDatabaseCall
         recyclerView.setLayoutManager(layoutManager);
 
         adapter = new MonthlyPlanAdapter();
-//        cal.add(Calendar.MONTH, + 1);
-//        String nextMonth = monthFormat.format(cal.getTime());
-//        cal.add(Calendar.MONTH, + 1);
-//        String nnextMonth = monthFormat.format(cal.getTime());
 
         adapter.addItem(new MonthlyPlan(1, 1, ""));
         adapter.addItem(new MonthlyPlan(2, 2, ""));
@@ -102,7 +92,7 @@ public class MonthlyActivity extends AppCompatActivity implements OnDatabaseCall
         nextBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(getApplicationContext(), CategoryActivity.class); // MonthlyActivity로 수정해야 함.
+                Intent intent = new Intent(getApplicationContext(), WeeklyActivity.class);
                 startActivity(intent);
             }
         });
@@ -145,7 +135,8 @@ public class MonthlyActivity extends AppCompatActivity implements OnDatabaseCall
 
     public void executeQueryForThisMonth() {
         Cursor cursor = database.rawQuery("select _id, month, goal from MONTHLY_GOAL");
-        for (int i = 0; i< cursor.getCount(); i++) {
+
+        for (int i = 0; i < cursor.getCount(); i++) {
             cursor.moveToNext();
             int id = cursor.getInt(0);
             int month = cursor.getInt(1);
@@ -156,6 +147,7 @@ public class MonthlyActivity extends AppCompatActivity implements OnDatabaseCall
             // Test code
             Log.d(TAG, "레코드#" + i + " : " + id + ", " + month + ", " + goalText);
         }
+
         cursor.close();
     }
 

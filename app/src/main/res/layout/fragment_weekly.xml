@@ -44,37 +44,57 @@
             android:minHeight="0dp"
             android:text="카테고리+"
             tools:ignore="TouchTargetSizeCheck" />
+
     </LinearLayout>
 
-    <EditText
-        android:id="@+id/editText_yearly_goal"
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="150dp"
+        android:background="@drawable/edittext_bg"
+        android:backgroundTint="@color/bright_yellow"
         android:layout_margin="5dp"
         android:padding="10dp"
-        android:ems="10"
-        android:hint="하루에 물 1L 마시기"
         android:elevation="5dp"
-        android:background="@drawable/memo_bg"
-        android:inputType="textMultiLine"
-        android:lines="5"
-        android:minLines="3"
-        android:maxLines="6"
-        android:privateImeOptions="defaultInputmode=korean"
-        android:scrollbars="vertical"/>
+        android:scrollbars="vertical"
+        android:orientation="vertical">
 
-    <Button
-        android:id="@+id/saveBtn_yearly_goal"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="right"
-        android:layout_marginTop="5dp"
-        android:layout_marginBottom="5dp"
-        android:backgroundTint="@color/bright_gray"
-        android:minWidth="0dp"
-        android:minHeight="40dp"
-        android:text="목표 저장"
-        android:textColor="@color/deep_gray"
-        android:textStyle="bold" />
+        <TextView
+            android:id="@+id/category_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="8pt"
+            android:textColor="@color/black"
+            android:textStyle="bold"
+            android:background="@drawable/date_bg"
+            android:backgroundTint="@color/green"
+            android:paddingHorizontal="10dp"
+            android:text="Title" />
+
+        <TextView
+            android:id="@+id/category_todoText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="@color/black"
+            android:text="todolist" />
+
+        <TextView
+            android:id="@+id/category_title2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="8pt"
+            android:textColor="@color/black"
+            android:textStyle="bold"
+            android:background="@drawable/date_bg"
+            android:backgroundTint="@color/pink"
+            android:paddingHorizontal="10dp"
+            android:text="Title" />
+
+        <TextView
+            android:id="@+id/category_todoText2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="@color/black"
+            android:text="todolist" />
+    </LinearLayout>
 
 </LinearLayout>

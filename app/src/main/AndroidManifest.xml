@@ -22,6 +22,9 @@
             android:name=".MonthlyActivity"
             android:exported="true" />
         <activity
+            android:name=".WeeklyActivity"
+            android:exported="true" />
+        <activity
             android:name=".MainActivity"
             android:exported="true">
             <intent-filter>

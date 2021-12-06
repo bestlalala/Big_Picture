@@ -1,14 +1,10 @@
 package smwu.mobileprogramming.termprj;
 
-import static java.sql.DriverManager.println;
-
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
-
-import java.util.ArrayList;
 
 public class GoalDatabase {
 
@@ -114,7 +110,9 @@ public class GoalDatabase {
         }
 
         public void onCreate(SQLiteDatabase _db) {
-            // TABLE_YEARLY_GOAL
+            /**
+             * TABLE_YEARLY_GOAL
+             */
             println("creating table [" + TABLE_YEARLY + "].");
 
             // drop existing table
@@ -141,7 +139,9 @@ public class GoalDatabase {
                 insertRecordYearly(_db, "2021", "모프 A+ 받기");
                 insertRecordYearly(_db, "2022", "우수장학금 받기");
 
-            // TABLE_MONTHLY_GOAL
+            /**
+             * TABLE_MONTHLY_GOAL
+             */
             println("creating table [" + TABLE_YEARLY + "].");
 
             // drop existing table
@@ -165,9 +165,11 @@ public class GoalDatabase {
                 Log.e(TAG, "Exception in CREATE_SQL2", ex);
             }
             // insert records
-            insertRecordMonthly("12", "학기 마무리 잘하기");
+                insertRecordMonthly(_db, "12", "학기 마무리 잘하기");
 
-            // TABLE_WEEKLY_GOAL
+            /**
+             * TABLE_WEEKLY_GOAL
+             */
             println("creating table [" + TABLE_YEARLY + "].");
 
             // drop existing table
@@ -192,8 +194,6 @@ public class GoalDatabase {
             } catch (Exception ex) {
                 Log.e(TAG, "Exception in CREATE_SQL3", ex);
             }
-            // insert records
-            insertRecordMonthly("12", "학기 마무리 잘하기");
 
         }
         public void onOpen(SQLiteDatabase db) {
@@ -217,19 +217,24 @@ public class GoalDatabase {
                     Log.e(TAG, "Exception in executing insert SQL.", ex);
                 }
             }
+
+            private void insertRecordMonthly(SQLiteDatabase _db, String month, String goalText) {
+                try {
+                    _db.execSQL( "insert into " + TABLE_MONTHLY + "(MONTH, GOAL) values ('" + month + "', '" + goalText + "');" );
+                } catch(Exception ex) {
+                    Log.e(TAG, "Exception in executing insert SQL.", ex);
+                }
+            }
     }
 
+    /**
+     * Yearly
+     * @param year
+     * @param goalText
+     */
     public void insertRecordYearly( String year, String goalText) {
         try {
             db.execSQL( "insert into " + TABLE_YEARLY + "(YEAR, GOAL) values ('" + year + "', '" + goalText + "');" );
-        } catch(Exception ex) {
-            Log.e(TAG, "Exception in executing insert SQL.", ex);
-        }
-    }
-
-    public void insertRecordMonthly( String month, String goalText) {
-        try {
-            db.execSQL( "insert into " + TABLE_MONTHLY + "(MONTH, GOAL) values ('" + month + "', '" + goalText + "');" );
         } catch(Exception ex) {
             Log.e(TAG, "Exception in executing insert SQL.", ex);
         }
@@ -245,6 +250,20 @@ public class GoalDatabase {
             Log.e(TAG, "Exception in executing update SAL.", ex);
         }
     }
+
+    /**
+     * Monthly
+     * @param month
+     * @param goalText
+     */
+    public void insertRecordMonthly( String month, String goalText) {
+        try {
+            db.execSQL( "insert into " + TABLE_MONTHLY + "(MONTH, GOAL) values ('" + month + "', '" + goalText + "');" );
+        } catch(Exception ex) {
+            Log.e(TAG, "Exception in executing insert SQL.", ex);
+        }
+    }
+
     public void updateRecordMonthly(String month, String goalText) {
         try {
             db.execSQL("UPDATE " + TABLE_MONTHLY
@@ -253,6 +272,21 @@ public class GoalDatabase {
                 + " WHERE " + "MONTH=" + month);
         } catch (Exception ex) {
             Log.e(TAG, "Exception in executing update SAL.", ex);
+        }
+    }
+
+    /**
+     * Weekly
+     * @param week
+     * @param category
+     */
+    public void insertRecordWeekly( String week, Category category) {
+        try {
+            db.execSQL( "insert into " + TABLE_WEEKLY
+                    + "(WEEK, CATEGORY_TITLE, CATEGORY_COLOR, CATEBORY_CONTENT) " +
+                    "values ('" + week + "', '" + category.title + "', '" + category.color + "', '" + category.content + "');" );
+        } catch(Exception ex) {
+            Log.e(TAG, "Exception in executing insert SQL.", ex);
         }
     }
 

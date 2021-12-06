@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/container"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginTop="30dp"
+    android:layout_marginLeft="30dp"
+    android:layout_marginRight="30dp"
+    android:layout_marginBottom="10dp"
+    android:scrollbars="vertical">
+
+
+    <TextView
+        android:id="@+id/monthly_goalSet"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        android:layout_marginBottom="5dp"
+        android:text="월별 목표 설정"
+        android:textColor="@color/black"
+        android:textSize="12pt"
+        android:textStyle="bold" />
+
+    <FrameLayout
+        android:id="@+id/frame"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" >
+
+    </FrameLayout>
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/button_back"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom"
+            android:gravity="center"
+            android:layout_marginTop="5dp"
+            android:layout_marginRight="95dp"
+            android:background="@drawable/bluebutton"
+            android:text="Back"
+            android:textColor="@color/white"
+            android:textSize="8pt" />
+
+        <Button
+            android:id="@+id/button_next"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom"
+            android:layout_marginLeft="98dp"
+            android:layout_marginTop="5dp"
+            android:background="@drawable/bluebutton"
+            android:text="Next"
+            android:textColor="@color/white"
+            android:textSize="8pt" />
+    </LinearLayout>
+</LinearLayout>

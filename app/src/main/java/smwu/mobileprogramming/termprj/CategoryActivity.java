@@ -1,26 +1,36 @@
 package smwu.mobileprogramming.termprj;
 
+import static smwu.mobileprogramming.termprj.GoalDatabase.TAG;
+
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.LinearLayout;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 
 import petrov.kristiyan.colorpicker.ColorPicker;
 
-public class CategoryActivity extends AppCompatActivity {
-    Button button;
+public class CategoryActivity extends AppCompatActivity implements OndbCategoryCallback {
+    Button button, saveBtn;
+    TextView thisWeek;
     EditText categoryName, categoryTodo;
+
+    GoalDatabase database;
+
+    int category_color=0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.category);
 
+        thisWeek = findViewById(R.id.thisWeek);
         categoryName = findViewById(R.id.categoryName);
         categoryTodo = findViewById(R.id.category_todo);
 
@@ -31,6 +41,30 @@ public class CategoryActivity extends AppCompatActivity {
                 openColorPicker();
             }
         });
+
+        saveBtn = findViewById(R.id.saveBtn_category);
+        saveBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                String strWeek = thisWeek.getText().toString();
+                Category category = new Category(categoryName.getText().toString(), category_color, categoryTodo.getText().toString());
+                insert(strWeek, category);
+            }
+        });
+
+        // open database
+        if (database != null) {
+            database.close();
+            database = null;
+        }
+
+        database = GoalDatabase.getInstance(this);
+        boolean isOpen = database.open();
+        if (isOpen) {
+            Log.d(TAG, "Goal database is open.");
+        } else {
+            Log.d(TAG, "Goal database is not open.");
+        }
     }
 
     public void openColorPicker() {
@@ -60,6 +94,7 @@ public class CategoryActivity extends AppCompatActivity {
                     @Override
                     public void onChooseColor(int position, int color) {
                         categoryName.setBackgroundColor(color);  // OK 버튼 클릭 시 이벤트
+                        category_color = color;
                     }
 
                     @Override
@@ -68,4 +103,20 @@ public class CategoryActivity extends AppCompatActivity {
                     }
                 }).show();  // dialog 생성
     }
+
+    protected void onDestroy() {
+        // close database
+        if (database != null) {
+            database.close();
+            database = null;
+        }
+        super.onDestroy();
+    }
+
+    @Override
+    public void insert(String week, Category category) {
+        database.insertRecordWeekly(week, category);
+        Toast.makeText(getApplicationContext(), "이번주 목표를 추가했습니다.", Toast.LENGTH_LONG).show();
+    }
+
 }

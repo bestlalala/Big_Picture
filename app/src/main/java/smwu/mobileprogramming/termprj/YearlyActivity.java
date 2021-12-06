@@ -95,7 +95,7 @@ public class YearlyActivity extends AppCompatActivity implements OnDatabaseCallb
         nextBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(getApplicationContext(), MonthlyActivity.class); // MonthlyActivity로 수정해야 함.
+                Intent intent = new Intent(getApplicationContext(), MonthlyActivity.class);
                 startActivity(intent);
             }
         });

@@ -52,19 +52,16 @@ public class FragmentYearly extends Fragment {
         saveBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                // 원래 없으면 새로 생성해서 삽입
-                in.insert(thisyearText.getText().toString(), goalText.getText().toString());
-
-                // 원래 있으면 업데이트
+                if (goalText.getText().toString() == "")
+                    // 원래 없으면 새로 생성해서 삽입
+                    in.insert(thisyearText.getText().toString(), goalText.getText().toString());
+                else
+                    // 원래 있으면 업데이트
+                    in.update(thisyearText.getText().toString(), goalText.getText().toString());
             }
         });
 
-        initUI(rootView);
-
         return rootView;
-    }
-
-    private void initUI(ViewGroup rootView){
     }
 
     public void resetGoalText(YearlyPlan item) {

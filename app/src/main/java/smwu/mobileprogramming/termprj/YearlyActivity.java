@@ -130,6 +130,12 @@ public class YearlyActivity extends AppCompatActivity implements OnDatabaseCallb
     }
 
     @Override
+    public void update(String year, String goalText) {
+        database.updateRecordYearly(year, goalText);
+        Toast.makeText(getApplicationContext(), "연도별 목표를 수정했습니다.", Toast.LENGTH_LONG).show();
+    }
+
+    @Override
     public ArrayList<YearlyPlan> selectAll() {
         ArrayList<YearlyPlan> result = database.selectAll();
         Toast.makeText(getApplicationContext(), "연도별 목표를 조회했습니다.", Toast.LENGTH_LONG).show();

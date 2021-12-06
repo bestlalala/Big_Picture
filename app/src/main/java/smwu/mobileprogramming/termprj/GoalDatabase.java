@@ -177,6 +177,17 @@ public class GoalDatabase {
         }
     }
 
+    public void updateRecordYearly(String year, String goalText) {
+        try {
+            db.execSQL("UPDATE " + TABLE_YEARLY
+                    + " SET "
+                    + "GOAL=" + "('" + goalText + "')"
+                + " WHERE " + "YEAR=" + year);
+        } catch (Exception ex) {
+            Log.e(TAG, "Exception in executing update SAL.", ex);
+        }
+    }
+
     public ArrayList<YearlyPlan> selectAll() {
         ArrayList<YearlyPlan> result = new ArrayList<YearlyPlan>();
 

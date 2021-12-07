@@ -18,7 +18,7 @@
         android:text="카테고리 추가" />
 
     <TextView
-        android:id="@+id/thisYear"
+        android:id="@+id/thisWeek"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="5dp"
@@ -41,20 +41,13 @@
         android:textSize="7pt"
         android:text="이번 주 새로운 목표의 카테고리를 설정합시다!" />
 
-    <LinearLayout
+    <Button
+        android:id="@+id/button3"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:orientation="horizontal">
-
-        <Button
-            android:id="@+id/button3"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:backgroundTint="@color/pink"
-            android:text="색상선택" />
-    </LinearLayout>
+        android:backgroundTint="@color/pink"
+        android:text="색상선택" />
 
     <EditText
         android:id="@+id/categoryName"
@@ -105,22 +98,39 @@
         android:maxLines="7"
         android:scrollbars="vertical"/>
 
-    <Button
-        android:id="@+id/saveBtn_category"
+    <LinearLayout
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:layout_gravity="right"
-        android:layout_marginTop="5dp"
-        android:layout_marginBottom="5dp"
-        android:minWidth="0dp"
-        android:minHeight="0dp"
-        android:textColor="@color/deep_gray"
-        android:textStyle="bold"
-        android:backgroundTint="@color/bright_gray"
-        android:text="저장" />
+        android:layout_margin="5dp"
+        android:orientation="horizontal">
 
+        <Button
+            android:id="@+id/cancel_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:layout_marginBottom="5dp"
+            android:backgroundTint="@color/bright_gray"
+            android:minWidth="0dp"
+            android:minHeight="0dp"
+            android:text="취소"
+            android:textColor="@color/deep_gray"
+            android:textStyle="bold" />
 
-
+        <Button
+            android:id="@+id/saveBtn_category"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:layout_marginBottom="5dp"
+            android:backgroundTint="@color/bright_gray"
+            android:minWidth="0dp"
+            android:minHeight="0dp"
+            android:text="저장"
+            android:textColor="@color/deep_gray"
+            android:textStyle="bold" />
+    </LinearLayout>
 
 
 </LinearLayout>

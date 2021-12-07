@@ -1,11 +1,13 @@
 package smwu.mobileprogramming.termprj;
 
 import static smwu.mobileprogramming.termprj.GoalDatabase.TAG;
+import static smwu.mobileprogramming.termprj.YearlyActivity.cal;
 import static smwu.mobileprogramming.termprj.YearlyActivity.currentTime;
 
 import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
+import android.os.Handler;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -16,7 +18,9 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Locale;
 
 public class MonthlyActivity extends AppCompatActivity implements OnDatabaseCallback {
@@ -30,8 +34,8 @@ public class MonthlyActivity extends AppCompatActivity implements OnDatabaseCall
     Button thismonthBtn, backBtn, nextBtn;
 
     // 이번 달 구하기
-    public static SimpleDateFormat monthFormat = new SimpleDateFormat("mm", Locale.KOREA);
-    public static String thisMonth = monthFormat.format(currentTime);
+    public static DecimalFormat df = new DecimalFormat("00");
+    public static String thisMonth = df.format(cal.get(Calendar.MONTH)+1);
 
     GoalDatabase database;
     @Override
@@ -55,7 +59,7 @@ public class MonthlyActivity extends AppCompatActivity implements OnDatabaseCall
 
         // RecyclerView
         recyclerView = findViewById(R.id.recyclerView);
-        layoutManager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
+        layoutManager = new LinearLayoutManager(getApplicationContext(), LinearLayoutManager.VERTICAL, false);
         recyclerView.setLayoutManager(layoutManager);
 
         adapter = new MonthlyPlanAdapter();
@@ -64,7 +68,6 @@ public class MonthlyActivity extends AppCompatActivity implements OnDatabaseCall
         adapter.addItem(new MonthlyPlan(2, 2, ""));
 
         recyclerView.setAdapter(adapter);
-
         adapter.setOnItemClickListener(new OnItemClickListener() {
             @Override
             public void onYearlyItemClick(YearlyPlanAdapter.ViewHolder holder, View view, int position) {
@@ -78,7 +81,6 @@ public class MonthlyActivity extends AppCompatActivity implements OnDatabaseCall
                 fragmentMonthly.resetGoalText(item);
             }
         });
-
         backBtn = findViewById(R.id.button_back);
         backBtn.setOnClickListener(new View.OnClickListener() {
             @Override

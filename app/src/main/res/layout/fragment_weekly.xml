@@ -38,7 +38,7 @@
             android:id="@+id/add_categoryBtn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="70dp"
+            android:layout_marginLeft="55dp"
             android:background="@drawable/bluebutton"
             android:backgroundTint="@color/yellow"
             android:minHeight="0dp"
@@ -48,53 +48,18 @@
     </LinearLayout>
 
     <LinearLayout
+        android:id="@+id/linearLayout"
         android:layout_width="match_parent"
-        android:layout_height="150dp"
+        android:layout_height="wrap_content"
         android:background="@drawable/edittext_bg"
         android:backgroundTint="@color/bright_yellow"
         android:layout_margin="5dp"
+        android:layout_marginVertical="10dp"
         android:padding="10dp"
         android:elevation="5dp"
         android:scrollbars="vertical"
         android:orientation="vertical">
 
-        <TextView
-            android:id="@+id/category_title"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textSize="8pt"
-            android:textColor="@color/black"
-            android:textStyle="bold"
-            android:background="@drawable/date_bg"
-            android:backgroundTint="@color/green"
-            android:paddingHorizontal="10dp"
-            android:text="Title" />
-
-        <TextView
-            android:id="@+id/category_todoText"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:textColor="@color/black"
-            android:text="todolist" />
-
-        <TextView
-            android:id="@+id/category_title2"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textSize="8pt"
-            android:textColor="@color/black"
-            android:textStyle="bold"
-            android:background="@drawable/date_bg"
-            android:backgroundTint="@color/pink"
-            android:paddingHorizontal="10dp"
-            android:text="Title" />
-
-        <TextView
-            android:id="@+id/category_todoText2"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:textColor="@color/black"
-            android:text="todolist" />
     </LinearLayout>
 
 </LinearLayout>

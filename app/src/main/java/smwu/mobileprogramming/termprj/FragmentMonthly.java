@@ -32,7 +32,7 @@ public class FragmentMonthly extends Fragment {
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
         ViewGroup rootView = (ViewGroup) inflater.inflate(R.layout.fragment_monthly, container, false);
 
-        thisMonthText = rootView.findViewById(R.id.thisYear);
+        thisMonthText = rootView.findViewById(R.id.thisMonth);
         goalText = rootView.findViewById(R.id.editText_monthly_goal);
 
         // 입력한 목표를 데이터베이스에 저장하기

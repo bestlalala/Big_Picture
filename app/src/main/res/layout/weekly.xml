@@ -12,12 +12,12 @@
 
 
     <TextView
-        android:id="@+id/monthly_goalSet"
+        android:id="@+id/weekly_goalSet"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="5dp"
         android:layout_marginBottom="5dp"
-        android:text="월별 목표 설정"
+        android:text="이번 주 목표 설정"
         android:textColor="@color/black"
         android:textSize="12pt"
         android:textStyle="bold" />
@@ -32,8 +32,8 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom"
         android:orientation="horizontal">
 
         <Button

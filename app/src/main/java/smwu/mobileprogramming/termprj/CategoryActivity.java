@@ -1,10 +1,14 @@
 package smwu.mobileprogramming.termprj;
 
 import static smwu.mobileprogramming.termprj.GoalDatabase.TAG;
+import static smwu.mobileprogramming.termprj.WeeklyActivity.thisWeek;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
+import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
+import android.os.Handler;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -17,11 +21,13 @@ import java.util.ArrayList;
 import petrov.kristiyan.colorpicker.ColorPicker;
 
 public class CategoryActivity extends AppCompatActivity implements OndbCategoryCallback {
-    Button button, saveBtn;
-    TextView thisWeek;
+    TextView thisWeekText;
+    Button cancelBtn, colorPickBtn, saveBtn;
     EditText categoryName, categoryTodo;
 
     GoalDatabase database;
+    Handler handler1 = new Handler();
+    Handler handler2 = new Handler();
 
     int category_color=0;
 
@@ -30,15 +36,27 @@ public class CategoryActivity extends AppCompatActivity implements OndbCategoryC
         super.onCreate(savedInstanceState);
         setContentView(R.layout.category);
 
-        thisWeek = findViewById(R.id.thisWeek);
+        thisWeekText = findViewById(R.id.thisWeek);
+        thisWeekText.setText(thisWeek+"주차");
+
         categoryName = findViewById(R.id.categoryName);
         categoryTodo = findViewById(R.id.category_todo);
 
-        button = findViewById(R.id.button3);
-        button.setOnClickListener(new View.OnClickListener() {
+        colorPickBtn = findViewById(R.id.button3);
+        colorPickBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                openColorPicker();
+                ColorPickThread colorPickThread = new ColorPickThread();
+                colorPickThread.start();
+            }
+        });
+
+        cancelBtn = findViewById(R.id.cancel_button);
+        cancelBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getApplicationContext(), WeeklyActivity.class);
+                startActivity(intent);
             }
         });
 
@@ -46,24 +64,38 @@ public class CategoryActivity extends AppCompatActivity implements OndbCategoryC
         saveBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                String strWeek = thisWeek.getText().toString();
-                Category category = new Category(categoryName.getText().toString(), category_color, categoryTodo.getText().toString());
-                insert(strWeek, category);
+                SaveThread saveThread = new SaveThread();
+                saveThread.start();
             }
         });
 
-        // open database
-        if (database != null) {
-            database.close();
-            database = null;
-        }
-
         database = GoalDatabase.getInstance(this);
-        boolean isOpen = database.open();
-        if (isOpen) {
-            Log.d(TAG, "Goal database is open.");
-        } else {
-            Log.d(TAG, "Goal database is not open.");
+    }
+
+    private class ColorPickThread extends Thread {
+
+        public void run() {
+            super.run();
+            handler1.post(new Runnable() {
+                @Override
+                public void run() {
+                    openColorPicker();
+                }
+            });
+        }
+    }
+    private class SaveThread extends Thread {
+        public void run() {
+            super.run();
+            handler2.post(new Runnable() {
+                @Override
+                public void run() {
+                    Category category = new Category(categoryName.getText().toString(), category_color, categoryTodo.getText().toString());
+                    insert(thisWeek, category);
+                    Intent intent = new Intent(getApplicationContext(), WeeklyActivity.class);
+                    startActivity(intent);
+                }
+            });
         }
     }
 
@@ -104,19 +136,26 @@ public class CategoryActivity extends AppCompatActivity implements OndbCategoryC
                 }).show();  // dialog 생성
     }
 
-    protected void onDestroy() {
-        // close database
-        if (database != null) {
-            database.close();
-            database = null;
-        }
-        super.onDestroy();
-    }
-
     @Override
     public void insert(String week, Category category) {
-        database.insertRecordWeekly(week, category);
-        Toast.makeText(getApplicationContext(), "이번주 목표를 추가했습니다.", Toast.LENGTH_LONG).show();
+        database = GoalDatabase.getInstance(this);
+        try {
+            synchronized (database) {
+                database.insertRecordWeekly(week, category);
+                Toast.makeText(getApplicationContext(), "이번주 목표를 추가했습니다.", Toast.LENGTH_LONG).show();
+            }
+        }
+        finally {
+            boolean isOpen = database.open();
+            if (isOpen) {
+                Log.d(TAG, "Goal database is open.");
+            } else {
+                Log.d(TAG, "Goal database is not open.");
+            }
+            if (database != null && isOpen){
+                database.close();
+            }
+        }
     }
 
 }

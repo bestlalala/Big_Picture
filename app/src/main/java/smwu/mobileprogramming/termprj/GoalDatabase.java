@@ -85,7 +85,7 @@ public class GoalDatabase {
             c1 = db.rawQuery(SQL, null);
             println("cursor count : " + c1.getCount());
         } catch (Exception ex) {
-            Log.e(TAG, "Exception in executeQuery", ex);
+            Log.e(TAG, "Exception in rawQuery", ex);
         }
         return c1;
     }
@@ -283,8 +283,8 @@ public class GoalDatabase {
     public void insertRecordWeekly( String week, Category category) {
         try {
             db.execSQL( "insert into " + TABLE_WEEKLY
-                    + "(WEEK, CATEGORY_TITLE, CATEGORY_COLOR, CATEBORY_CONTENT) " +
-                    "values ('" + week + "', '" + category.title + "', '" + category.color + "', '" + category.content + "');" );
+                    + "(WEEK, CATEGORY_TITLE, CATEGORY_COLOR, CATEGORY_CONTENT) " +
+                    "values ('" + week + "', '" + category.title + "', '" + category.color + "', ('" + category.content + "'));" );
         } catch(Exception ex) {
             Log.e(TAG, "Exception in executing insert SQL.", ex);
         }

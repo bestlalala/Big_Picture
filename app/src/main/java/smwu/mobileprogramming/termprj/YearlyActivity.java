@@ -9,6 +9,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
+import android.os.Handler;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -30,6 +31,8 @@ public class YearlyActivity extends AppCompatActivity implements OnDatabaseCallb
     TextView thisyearText;
     Button thisyearBtn, backBtn, nextBtn;
 
+    Handler handler = new Handler();
+
     // 올해 연도 구하기
     public static Calendar cal = Calendar.getInstance();
     public static Date currentTime = cal.getTime();
@@ -47,12 +50,15 @@ public class YearlyActivity extends AppCompatActivity implements OnDatabaseCallb
         fragmentYearly = new FragmentYearly();
         getSupportFragmentManager().beginTransaction().add(R.id.frame, fragmentYearly).commit();
 
+        GetDataThread getDataThread = new GetDataThread();
+        getDataThread.start();
+
         thisyearBtn = findViewById(R.id.thisYearGoal);
         thisyearBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 fragmentYearly.thisyearText.setText(thisYear);
-                executeQueryForThisYear();
+                getDataThread.run();
             }
         });
 
@@ -124,6 +130,19 @@ public class YearlyActivity extends AppCompatActivity implements OnDatabaseCallb
         super.onDestroy();
     }
 
+    class GetDataThread extends Thread {
+
+        public void run() {
+            super.run();
+            handler.post(new Runnable() {
+                @Override
+                public void run() {
+                    executeQueryForThisYear();
+                }
+            });
+        }
+    }
+
     @Override
     public void insert(String year, String goalText) {
         database.insertRecordYearly(year, goalText);
@@ -137,14 +156,14 @@ public class YearlyActivity extends AppCompatActivity implements OnDatabaseCallb
     }
 
     public void executeQueryForThisYear() {
-        Cursor cursor = database.rawQuery("select _id, year, goal from YEARLY_GOAL");
+        Cursor cursor = database.rawQuery("select * from YEARLY_GOAL WHERE YEAR="+thisYear);
+
         for (int i = 0; i< cursor.getCount(); i++) {
             cursor.moveToNext();
             int id = cursor.getInt(0);
             int year = cursor.getInt(1);
             String goalText = cursor.getString(2);
-            if (year == Integer.valueOf(thisYear))
-                fragmentYearly.goalText.setText(goalText);
+            fragmentYearly.goalText.setText(goalText);
 
             // Test code
             Log.d(TAG, "레코드#" + i + " : " + id + ", " + year + ", " + goalText);

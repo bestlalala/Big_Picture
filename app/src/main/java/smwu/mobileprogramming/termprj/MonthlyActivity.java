@@ -33,6 +33,8 @@ public class MonthlyActivity extends AppCompatActivity implements OnDatabaseCall
     TextView thismonthText;
     Button thismonthBtn, backBtn, nextBtn;
 
+    Handler handler = new Handler();
+
     // 이번 달 구하기
     public static DecimalFormat df = new DecimalFormat("00");
     public static String thisMonth = df.format(cal.get(Calendar.MONTH)+1);
@@ -48,12 +50,15 @@ public class MonthlyActivity extends AppCompatActivity implements OnDatabaseCall
         fragmentMonthly = new FragmentMonthly();
         getSupportFragmentManager().beginTransaction().add(R.id.frame, fragmentMonthly).commit();
 
+        GetDataThread getDataThread = new GetDataThread();
+        getDataThread.start();
+
         thismonthBtn = findViewById(R.id.thisMonthGoal);
         thismonthBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 fragmentMonthly.thisMonthText.setText(thisMonth);
-                executeQueryForThisMonth();
+                getDataThread.run();
             }
         });
 
@@ -123,6 +128,19 @@ public class MonthlyActivity extends AppCompatActivity implements OnDatabaseCall
         super.onDestroy();
     }
 
+    class GetDataThread extends Thread {
+
+        public void run() {
+            super.run();
+            handler.post(new Runnable() {
+                @Override
+                public void run() {
+                    executeQueryForThisMonth();
+                }
+            });
+        }
+    }
+
     @Override
     public void insert(String month, String goalText) {
         database.insertRecordMonthly(month, goalText);
@@ -136,15 +154,14 @@ public class MonthlyActivity extends AppCompatActivity implements OnDatabaseCall
     }
 
     public void executeQueryForThisMonth() {
-        Cursor cursor = database.rawQuery("select _id, month, goal from MONTHLY_GOAL");
+        Cursor cursor = database.rawQuery("select * from MONTHLY_GOAL WHERE MONTH="+thisMonth);
 
         for (int i = 0; i < cursor.getCount(); i++) {
             cursor.moveToNext();
             int id = cursor.getInt(0);
             int month = cursor.getInt(1);
             String goalText = cursor.getString(2);
-            if (month == Integer.valueOf(thisMonth))
-                fragmentMonthly.goalText.setText(goalText);
+            fragmentMonthly.goalText.setText(goalText);
 
             // Test code
             Log.d(TAG, "레코드#" + i + " : " + id + ", " + month + ", " + goalText);
@@ -154,7 +171,7 @@ public class MonthlyActivity extends AppCompatActivity implements OnDatabaseCall
     }
 
     public void executeQuery(MonthlyPlan item) {
-        Cursor cursor = database.rawQuery("select _id, month, goal from MONTHLY_GOAL");
+        Cursor cursor = database.rawQuery("select * from MONTHLY_GOAL");
         for (int i = 0; i< cursor.getCount(); i++) {
             cursor.moveToNext();
             int id = cursor.getInt(0);

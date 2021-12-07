@@ -8,7 +8,6 @@ import android.database.Cursor;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
-import android.util.DisplayMetrics;
 import android.util.Log;
 import android.util.TypedValue;
 import android.view.View;
@@ -84,7 +83,6 @@ public class WeeklyActivity extends AppCompatActivity {
                     executeQueryForThisWeek();
                 }
             });
-
         }
     }
     private void executeQueryForThisWeek() {
@@ -122,20 +120,17 @@ public class WeeklyActivity extends AppCompatActivity {
     }
 
     public void createTextView(Category category) {
-        DisplayMetrics dm = getResources().getDisplayMetrics();
-        int size = Math.round(5 * dm.density);
         TextView category_title = new TextView(this);
         category_title.setText(category.title);
-        category_title.setBackgroundColor(category.color);
         category_title.setTextSize(TypedValue.COMPLEX_UNIT_PT, 8);
         category_title.setTextColor(Color.BLACK);
-        category_title.setPadding(size, size, size, size);
-        category_title.setBackground(getResources().getDrawable(R.drawable.date_bg));
+        category_title.setPadding(20, 5, 20, 5);
+        category_title.setBackgroundColor(category.color);
 
         TextView todo = new TextView(this);
         todo.setText(category.content);
         todo.setTextColor(Color.BLACK);
-        todo.setPadding(size, 0, size, 0);
+        todo.setPadding(30, 0, 0, 0);
 
         fragmentWeekly.addCategory(category_title);
         fragmentWeekly.addCategory(todo);

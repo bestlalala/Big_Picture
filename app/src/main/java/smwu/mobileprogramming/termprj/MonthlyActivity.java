@@ -1,10 +1,8 @@
 package smwu.mobileprogramming.termprj;
 
 import static smwu.mobileprogramming.termprj.GoalDatabase.TAG;
-
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
+import static smwu.mobileprogramming.termprj.YearlyActivity.cal;
+import static smwu.mobileprogramming.termprj.YearlyActivity.currentTime;
 
 import android.content.Intent;
 import android.database.Cursor;
@@ -16,83 +14,83 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
+import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
-import java.util.Date;
 import java.util.Locale;
 
-public class YearlyActivity extends AppCompatActivity implements OnDatabaseCallback {
+public class MonthlyActivity extends AppCompatActivity implements OnDatabaseCallback {
 
-    FragmentYearly fragmentYearly;
+    FragmentMonthly fragmentMonthly;
     RecyclerView recyclerView;
     LinearLayoutManager layoutManager;
-    YearlyPlanAdapter adapter;
+    MonthlyPlanAdapter adapter;
 
-    TextView thisyearText;
-    Button thisyearBtn, backBtn, nextBtn;
+    TextView thismonthText;
+    Button thismonthBtn, backBtn, nextBtn;
 
     Handler handler = new Handler();
 
-    // 올해 연도 구하기
-    public static Calendar cal = Calendar.getInstance();
-    public static Date currentTime = cal.getTime();
-    public static SimpleDateFormat yearFormat = new SimpleDateFormat("yyyy", Locale.KOREA);
-    public static String thisYear = yearFormat.format(currentTime);
+    // 이번 달 구하기
+    public static DecimalFormat df = new DecimalFormat("00");
+    public static String thisMonth = df.format(cal.get(Calendar.MONTH)+1);
 
     GoalDatabase database;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.yearly);
+        setContentView(R.layout.monthly);
 
         // 목표 입력하는 Fragment 띄우기
-        thisyearText = findViewById(R.id.thisYear);
-        fragmentYearly = new FragmentYearly();
-        getSupportFragmentManager().beginTransaction().add(R.id.frame, fragmentYearly).commit();
+        thismonthText = findViewById(R.id.thisMonth);
+        fragmentMonthly = new FragmentMonthly();
+        getSupportFragmentManager().beginTransaction().add(R.id.frame, fragmentMonthly).commit();
 
         GetDataThread getDataThread = new GetDataThread();
         getDataThread.start();
 
-        thisyearBtn = findViewById(R.id.thisYearGoal);
-        thisyearBtn.setOnClickListener(new View.OnClickListener() {
+        thismonthBtn = findViewById(R.id.thisMonthGoal);
+        thismonthBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                fragmentYearly.thisyearText.setText(thisYear);
+                fragmentMonthly.thisMonthText.setText(thisMonth);
                 getDataThread.run();
             }
         });
 
         // RecyclerView
         recyclerView = findViewById(R.id.recyclerView);
-        layoutManager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
+        layoutManager = new LinearLayoutManager(getApplicationContext(), LinearLayoutManager.VERTICAL, false);
         recyclerView.setLayoutManager(layoutManager);
 
-        adapter = new YearlyPlanAdapter();
+        adapter = new MonthlyPlanAdapter();
 
-        adapter.addItem(new YearlyPlan(1, Integer.valueOf(thisYear)+1, ""));
-        adapter.addItem(new YearlyPlan(2, Integer.valueOf(thisYear)+2, ""));
+        adapter.addItem(new MonthlyPlan(1, 1, ""));
+        adapter.addItem(new MonthlyPlan(2, 2, ""));
 
         recyclerView.setAdapter(adapter);
-
         adapter.setOnItemClickListener(new OnItemClickListener() {
             @Override
             public void onYearlyItemClick(YearlyPlanAdapter.ViewHolder holder, View view, int position) {
-                YearlyPlan item = adapter.getItem(position);
-                Toast.makeText(getApplicationContext(), "아이템 선택됨: " + item.getYear(), Toast.LENGTH_LONG).show();
-                executeQuery(item);
-                fragmentYearly.resetGoalText(item);
             }
 
             @Override
             public void onMonthlyItemClick(MonthlyPlanAdapter.ViewHolder holder, View view, int position) {
+                MonthlyPlan item = adapter.getItem(position);
+                Toast.makeText(getApplicationContext(), "아이템 선택됨: " + item.getMonth(), Toast.LENGTH_LONG).show();
+                executeQuery(item);
+                fragmentMonthly.resetGoalText(item);
             }
         });
-
         backBtn = findViewById(R.id.button_back);
         backBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(getApplicationContext(), HomeActivity.class);
+                Intent intent = new Intent(getApplicationContext(), YearlyActivity.class);
                 startActivity(intent);
             }
         });
@@ -101,7 +99,7 @@ public class YearlyActivity extends AppCompatActivity implements OnDatabaseCallb
         nextBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(getApplicationContext(), MonthlyActivity.class);
+                Intent intent = new Intent(getApplicationContext(), WeeklyActivity.class);
                 startActivity(intent);
             }
         });
@@ -137,52 +135,53 @@ public class YearlyActivity extends AppCompatActivity implements OnDatabaseCallb
             handler.post(new Runnable() {
                 @Override
                 public void run() {
-                    executeQueryForThisYear();
+                    executeQueryForThisMonth();
                 }
             });
         }
     }
 
     @Override
-    public void insert(String year, String goalText) {
-        database.insertRecordYearly(year, goalText);
-        Toast.makeText(getApplicationContext(), "연도별 목표를 추가했습니다.", Toast.LENGTH_LONG).show();
+    public void insert(String month, String goalText) {
+        database.insertRecordMonthly(month, goalText);
+        Toast.makeText(getApplicationContext(), "월별 목표를 추가했습니다.", Toast.LENGTH_LONG).show();
     }
 
     @Override
-    public void update(String year, String goalText) {
-        database.updateRecordYearly(year, goalText);
-        Toast.makeText(getApplicationContext(), "연도별 목표를 수정했습니다.", Toast.LENGTH_LONG).show();
+    public void update(String month, String goalText) {
+        database.updateRecordMonthly(month, goalText);
+        Toast.makeText(getApplicationContext(), "웝별 목표를 수정했습니다.", Toast.LENGTH_LONG).show();
     }
 
-    public void executeQueryForThisYear() {
-        Cursor cursor = database.rawQuery("select * from YEARLY_GOAL WHERE YEAR="+thisYear);
+    public void executeQueryForThisMonth() {
+        Cursor cursor = database.rawQuery("select * from MONTHLY_GOAL WHERE MONTH="+thisMonth);
 
-        for (int i = 0; i< cursor.getCount(); i++) {
+        for (int i = 0; i < cursor.getCount(); i++) {
             cursor.moveToNext();
             int id = cursor.getInt(0);
-            int year = cursor.getInt(1);
+            int month = cursor.getInt(1);
             String goalText = cursor.getString(2);
-            fragmentYearly.goalText.setText(goalText);
+            fragmentMonthly.goalText.setText(goalText);
 
             // Test code
-            Log.d(TAG, "레코드#" + i + " : " + id + ", " + year + ", " + goalText);
+            Log.d(TAG, "레코드#" + i + " : " + id + ", " + month + ", " + goalText);
         }
+
         cursor.close();
     }
 
-    public void executeQuery(YearlyPlan item) {
-        Cursor cursor = database.rawQuery("select _id, year, goal from YEARLY_GOAL");
+    public void executeQuery(MonthlyPlan item) {
+        Cursor cursor = database.rawQuery("select * from MONTHLY_GOAL");
         for (int i = 0; i< cursor.getCount(); i++) {
             cursor.moveToNext();
             int id = cursor.getInt(0);
-            int year = cursor.getInt(1);
+            int month = cursor.getInt(1);
             String goalText = cursor.getString(2);
-            if (year == item.getYear())
+            if (month == item.getMonth())
                 item.setGoalText(goalText);
 
             // Test code
-            Log.d(TAG, "레코드#" + i + " : " + id + ", " + year + ", " + goalText);
+            Log.d(TAG, "레코드#" + i + " : " + id + ", " + month + ", " + goalText);
         }
         cursor.close();
     }

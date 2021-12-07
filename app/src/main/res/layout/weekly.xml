@@ -10,31 +10,17 @@
     android:layout_marginBottom="10dp"
     android:scrollbars="vertical">
 
-    <LinearLayout
+
+    <TextView
+        android:id="@+id/weekly_goalSet"
         android:layout_width="wrap_content"
-        android:layout_height="match_parent"
-        android:orientation="horizontal">
-
-        <TextView
-            android:id="@+id/yearly_goalSet"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="5dp"
-            android:layout_marginBottom="5dp"
-            android:text="연도별 목표 설정"
-            android:textColor="@color/black"
-            android:textSize="12pt"
-            android:textStyle="bold" />
-
-        <Button
-            android:id="@+id/thisYearGoal"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="right"
-            android:layout_marginLeft="60dp"
-            android:backgroundTint="@color/bright_blue"
-            android:text="올해 목표" />
-    </LinearLayout>
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        android:layout_marginBottom="5dp"
+        android:text="이번 주 목표 설정"
+        android:textColor="@color/black"
+        android:textSize="12pt"
+        android:textStyle="bold" />
 
     <FrameLayout
         android:id="@+id/frame"
@@ -44,16 +30,10 @@
     </FrameLayout>
 
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recyclerView"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
-
-
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom"
         android:orientation="horizontal">
 
         <Button

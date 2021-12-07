@@ -1,35 +1,23 @@
 package smwu.mobileprogramming.termprj;
 
-import static smwu.mobileprogramming.termprj.YearlyActivity.thisYear;
-
 import android.app.Activity;
-import android.content.Context;
-import android.database.Cursor;
 import android.os.Bundle;
-import android.os.Handler;
-import android.os.Message;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 
-import org.w3c.dom.Text;
-
-import java.util.ArrayList;
+import smwu.mobileprogramming.termprj.OnDatabaseCallback;
 
 
-public class FragmentYearly extends Fragment {
+public class FragmentMonthly extends Fragment {
     OnDatabaseCallback in;
-    TextView thisyearText;
+    TextView thisMonthText;
     EditText goalText;
     Button saveBtn;
 
@@ -42,30 +30,30 @@ public class FragmentYearly extends Fragment {
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
-        ViewGroup rootView = (ViewGroup) inflater.inflate(R.layout.fragment_yearly, container, false);
+        ViewGroup rootView = (ViewGroup) inflater.inflate(R.layout.fragment_monthly, container, false);
 
-        thisyearText = rootView.findViewById(R.id.thisYear);
-        goalText = rootView.findViewById(R.id.editText_yearly_goal);
+        thisMonthText = rootView.findViewById(R.id.thisMonth);
+        goalText = rootView.findViewById(R.id.editText_monthly_goal);
 
         // 입력한 목표를 데이터베이스에 저장하기
-        saveBtn = rootView.findViewById(R.id.saveBtn_yearly_goal);
+        saveBtn = rootView.findViewById(R.id.saveBtn_monthly_goal);
         saveBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 if (goalText.getText().toString() == "")
                     // 원래 없으면 새로 생성해서 삽입
-                    in.insert(thisyearText.getText().toString(), goalText.getText().toString());
+                    in.insert(thisMonthText.getText().toString(), goalText.getText().toString());
                 else
                     // 원래 있으면 업데이트
-                    in.update(thisyearText.getText().toString(), goalText.getText().toString());
+                    in.update(thisMonthText.getText().toString(), goalText.getText().toString());
             }
         });
 
         return rootView;
     }
 
-    public void resetGoalText(YearlyPlan item) {
-        thisyearText.setText(String.valueOf(item.getYear()));
+    public void resetGoalText(MonthlyPlan item) {
+        thisMonthText.setText(String.valueOf(item.getMonth()));
         goalText.setText(item.getGoalText());
     }
 }

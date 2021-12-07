@@ -1,27 +1,27 @@
 package smwu.mobileprogramming.termprj;
 
-public class YearlyPlan {
+public class MonthlyPlan {
     int _id;
-    int year;
+    int month;
     String goalText;
 
-    public YearlyPlan(int _id, int year, String goalText) {
+    public MonthlyPlan(int _id, int month, String goalText) {
         this._id = _id;
-        this.year = year;
+        this.month = month;
         this.goalText = goalText;
     }
 
-    public YearlyPlan(int year, String goalText) {
-        this.year = year;
+    public MonthlyPlan(int month, String goalText) {
+        this.month = month;
         this.goalText = goalText;
     }
 
-    public int getYear() {
-        return year;
+    public int getMonth() {
+        return month;
     }
 
-    public void setYear(int year) {
-        this.year = year;
+    public void setMonth(int month) {
+        this.month = month;
     }
 
     public String getGoalText() {
@@ -34,8 +34,8 @@ public class YearlyPlan {
 
     @Override
     public String toString() {
-        return "YearlyPlan{" +
-                "year='" + year + '\'' +
+        return "MonthlyPlan{" +
+                "month=" + month +
                 ", goalText='" + goalText + '\'' +
                 '}';
     }

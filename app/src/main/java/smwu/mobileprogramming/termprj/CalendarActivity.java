@@ -10,13 +10,20 @@ import android.os.Handler;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.CalendarView;
 import android.widget.TextView;
+
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import java.text.DecimalFormat;
 import java.util.Calendar;
 
 public class CalendarActivity extends AppCompatActivity {
+    CalendarView calendarView;
+    String Date;
+    TextView calDate;
+
     Button btn;
     TextView month, plan;
     Handler handler = new Handler();
@@ -33,6 +40,17 @@ public class CalendarActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.calender);
 
+        calendarView = findViewById(R.id.calendarView);
+        calendarView.setOnDateChangeListener(new CalendarView.OnDateChangeListener() {
+            @Override
+            public void onSelectedDayChange(@NonNull CalendarView view, int year, int month, int dayOfMonth) {
+                Date = year + "/" + (month + 1) + "/" + dayOfMonth;
+//                calDate = (TextView) findViewById(R.id.calendarDate);
+//                calDate.setText(Date);
+            }
+        });
+
+
         //이번 달 표시
         month = (TextView) findViewById(R.id.textViewMonth);
         month.setText("" + (thisMonth) + "월");
@@ -48,6 +66,11 @@ public class CalendarActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(getApplicationContext(), TodayMain.class);
+
+                Bundle extras = new Bundle();
+                extras.putString("Date", Date);
+                intent.putExtras(extras);
+
                 startActivity(intent);
             }
         });

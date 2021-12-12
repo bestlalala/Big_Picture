@@ -4,11 +4,13 @@ public class TodayMain_Plan {
     String category;
     String todo1;
     String todo2;
+    int color;
 
-    public TodayMain_Plan(String category, String todo1, String todo2) {
+    public TodayMain_Plan(String category, String todo1, String todo2, int color) {
         this.category = category;
         this.todo1 = todo1;
         this.todo2 = todo2;
+        this.color = color;
     }
 
     public String getCategory() {
@@ -33,5 +35,13 @@ public class TodayMain_Plan {
 
     public void setTodo2(String todo2) {
         this.todo2 = todo2;
+    }
+
+    public int getColor() {
+        return color;
+    }
+
+    public void setColor(int color) {
+        this.color = color;
     }
 }

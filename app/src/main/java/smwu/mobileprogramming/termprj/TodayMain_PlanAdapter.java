@@ -101,6 +101,7 @@ public class TodayMain_PlanAdapter extends RecyclerView.Adapter<TodayMain_PlanAd
             category.setText(item.getCategory());
             todo1.setText(item.getTodo1());
             todo2.setText(item.getTodo2());
+            category.setBackgroundColor(item.getColor());
         }
     }
 

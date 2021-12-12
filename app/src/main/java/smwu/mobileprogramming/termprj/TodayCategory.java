@@ -24,12 +24,19 @@ import java.util.Calendar;
 public class TodayCategory extends AppCompatActivity {
     TodayMain todayMain;
 
+    CalendarActivity calendarActivity;
+    TextView date;
+
     FragmentWeekly fragmentWeekly;
     Button saveBtn;
 
     RecyclerView recyclerView;
     LinearLayoutManager layoutManager;
     TodayCategoryItemAdapter adapter;
+
+    String cate, cate_;
+    String todo1, todo1_, todo2, todo2_;
+    int col,col_;
 
     GoalDatabase database;
 
@@ -41,6 +48,10 @@ public class TodayCategory extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.today_category);
+
+        Bundle extras1 = getIntent().getExtras();
+        date = findViewById(R.id.textViewTodayDate);
+        date.setText(extras1.getString("Date"));
 
         GetDataThread thread = new GetDataThread();
         thread.start();
@@ -67,9 +78,10 @@ public class TodayCategory extends AppCompatActivity {
             @Override
             public void onTodayCategoryItemClick(TodayCategoryItemAdapter.ViewHolder holder, View view, int position) {
                 TodayCategoryItem item = adapter.getItem(position);
-
-                todayMain.planAdapter.addItem(new TodayMain_Plan("TodayCategoryItem.get" , "할 일을 작성해주세요1", "할 일을 작성해주세요2"));
-                todayMain.recyclerView.setAdapter(todayMain.planAdapter);
+                cate_ = cate;
+                col_ = col;
+                todo1_ = todo1;
+                todo2_ = todo2;
             }
         });
 
@@ -78,26 +90,43 @@ public class TodayCategory extends AppCompatActivity {
         saveBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                SaveThread saveThread = new SaveThread();
-                saveThread.start();
+                Intent intent = new Intent(getApplicationContext(), TodayMain.class);
+
+                Bundle extras2 = new Bundle();
+                extras2.putString("Date", extras1.getString("Date"));
+                extras2.putString("Category", cate_);
+                extras2.putInt("Color", col_);
+                extras2.putString("Todo1", todo1_);
+                extras2.putString("Todo2", todo2_);
+                intent.putExtras(extras2);
+
+                startActivity(intent);
+
+//                SaveThread saveThread = new SaveThread();
+//                saveThread.start();
             }
         });
     }
 
-    private class SaveThread extends Thread {
-        public void run() {
-            super.run();
-            handler.post(new Runnable() {
-                @Override
-                public void run() {
-                    //데이터베이스 저장 함수 insert(thisWeek, category);
-
-                    Intent intent = new Intent(getApplicationContext(), TodayMain.class);
-                    startActivity(intent);
-                }
-            });
-        }
-    }
+//    private class SaveThread extends Thread {
+//        public void run() {
+//            super.run();
+//            handler.post(new Runnable() {
+//                @Override
+//                public void run() {
+//                    //데이터베이스 저장 함수 insert(thisWeek, category);
+//
+//                    Intent intent = new Intent(getApplicationContext(), TodayMain.class);
+//
+//                    Bundle extras = new Bundle();
+//                    extras.putString("Date", extras.getString("Date"));
+//                    intent.putExtras(extras);
+//
+//                    startActivity(intent);
+//                }
+//            });
+//        }
+//    }
 
     class GetDataThread extends Thread {
 
@@ -146,8 +175,13 @@ public class TodayCategory extends AppCompatActivity {
         }
     }
     public void createTextView(Category category) {
+        todo1 = category.content;
+        //todo2 =
+
         adapter.addItem(new TodayCategoryItem(category.title, category.color));
         recyclerView.setAdapter(adapter);
+        cate = category.title;
+        col = category.color;
     }
 
 }

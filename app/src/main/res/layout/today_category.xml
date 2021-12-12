@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/textViewTodayDate"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_margin="10dp"
+        android:text="2021/11/11 ~요일"
+        android:background="#E5E5E5"
+        android:textSize="20dp"
+        android:textStyle="bold"
+        android:gravity="center"/>
+
+    <TextView
+        android:id="@+id/textViewTodayExplain"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+        android:text="주별 목표 중 오늘 할 일을 정해봅시다!"
+        android:layout_below="@+id/textViewTodayDate"
+        android:textSize="20dp"
+        android:textStyle="bold"
+        android:gravity="center"/>
+
+    <RelativeLayout
+        android:id="@+id/RelativeLayoutTodo"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/textViewTodayExplain"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginEnd="20dp"
+        android:layout_marginBottom="20dp"
+        android:background="@drawable/layout_border">
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recyclerView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="20sp"/>
+
+    </RelativeLayout>
+
+    <Button
+        android:id="@+id/categorySaveButton"
+        android:layout_width="80dp"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentBottom="true"
+        android:layout_margin="40dp"
+        android:backgroundTint="#E5E5E5"
+        android:gravity="center"
+        android:text="저장"
+        android:textColor="@color/black"
+        android:textSize="20dp"
+        android:textStyle="bold" />
+
+</RelativeLayout>

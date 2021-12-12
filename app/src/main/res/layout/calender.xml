@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/textViewMonth"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        android:text="00월"
+        android:textSize="20dp"
+        android:layout_margin="20dp"
+        android:gravity="center"/>
+
+    <TextView
+        android:id="@+id/textViewMonthPlan"
+        android:layout_width="150dp"
+        android:layout_height="80dp"
+        android:layout_alignParentRight="true"
+        android:layout_toRightOf="@+id/textViewMonth"
+        android:layout_margin="20dp"
+        android:background="#FAEE89"
+        android:gravity="center"
+        android:text="이번 달 목표!" />
+
+    <CalendarView
+        android:id="@+id/calendarView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/textViewMonth" />
+
+    <Button
+        android:id="@+id/calendarButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/calendarView"
+        android:layout_alignParentRight="true"
+        android:layout_marginRight="10dp"
+        android:backgroundTint="#5987B1"
+        android:gravity="center"
+        android:text="오늘의 할 일 보기" />
+
+</RelativeLayout>

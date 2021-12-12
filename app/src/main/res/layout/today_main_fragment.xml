@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/RelativeLayoutTodo"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_below="@+id/textViewTodayDate"
+    android:layout_marginStart="20dp"
+    android:layout_marginTop="20dp"
+    android:layout_marginEnd="20dp"
+    android:layout_marginBottom="20dp"
+    android:background="@drawable/layout_border">
+
+    <TextView
+        android:id="@+id/textViewTodayCategory"
+        android:layout_width="wrap_content"
+        android:layout_height="40dp"
+        android:layout_marginStart="15dp"
+        android:layout_marginTop="15dp"
+        android:layout_marginEnd="15dp"
+        android:layout_marginBottom="15dp"
+        android:background="#D7EFB8"
+        android:gravity="center"
+        android:padding="10dp"
+        android:text="HTTP 웹 기본 지식 강의 다 듣기" />
+
+    <Button
+        android:id="@+id/todayTodoButton"
+        android:layout_width="20dp"
+        android:layout_height="20dp"
+        android:layout_alignParentRight="true"
+        android:layout_margin="20dp"
+        android:drawableBottom="@drawable/button_layout" />
+
+    <CheckBox
+        android:id="@+id/checkboxTodo1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/textViewTodayCategory"
+        android:text="강의 ch5 듣기" />
+
+    <CheckBox
+        android:id="@+id/checkboxTodo2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/checkboxTodo1"
+        android:text="ch5 내용 정리 및 복습" />
+
+</RelativeLayout>

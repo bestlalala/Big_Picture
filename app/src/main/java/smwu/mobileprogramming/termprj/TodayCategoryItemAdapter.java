@@ -8,6 +8,8 @@ import android.widget.TextView;
 
 import androidx.recyclerview.widget.RecyclerView;
 
+import org.w3c.dom.Text;
+
 import java.util.ArrayList;
 
 public class TodayCategoryItemAdapter extends RecyclerView.Adapter<TodayCategoryItemAdapter.ViewHolder> implements OnItemClickListener {
@@ -69,12 +71,12 @@ public class TodayCategoryItemAdapter extends RecyclerView.Adapter<TodayCategory
     }
 
     static class ViewHolder extends RecyclerView.ViewHolder {
-        Button btn;
+        TextView textView;
 
         public ViewHolder(View itemView, final OnItemClickListener listener) {
             super(itemView);
 
-            btn = itemView.findViewById(R.id.categoryButton);
+            textView = itemView.findViewById(R.id.TodayCategoryText);
 
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -89,8 +91,8 @@ public class TodayCategoryItemAdapter extends RecyclerView.Adapter<TodayCategory
         }
 
         public void setItem(TodayCategoryItem item) {
-            btn.setText(item.getCategory_name());
-            btn.setBackgroundColor(item.getColor());
+            textView.setText(item.getCategory_name());
+            textView.setBackgroundColor(item.getColor());
         }
     }
 }

@@ -15,6 +15,7 @@ public class TodayMain extends AppCompatActivity {
     Button cateBtn;
 
     RecyclerView recyclerView;
+    LinearLayoutManager layoutManager;
     TodayMain_PlanAdapter planAdapter;
 
      Context context;
@@ -34,10 +35,9 @@ public class TodayMain extends AppCompatActivity {
             }
         });
 
-        recyclerView = (RecyclerView) findViewById(R.id.recyclerView);
-        LinearLayoutManager layoutManager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
+        recyclerView = findViewById(R.id.recyclerView);
+        layoutManager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
         recyclerView.setLayoutManager(layoutManager);
-
         planAdapter = new TodayMain_PlanAdapter();
 
         planAdapter.addItem(new TodayMain_Plan("카테고리 선택", "할 일 1", "할 일2"));

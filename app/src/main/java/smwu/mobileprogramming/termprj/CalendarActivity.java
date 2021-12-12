@@ -6,6 +6,7 @@ import static smwu.mobileprogramming.termprj.YearlyActivity.cal;
 import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
+import android.os.Handler;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -18,6 +19,7 @@ import java.util.Calendar;
 public class CalendarActivity extends AppCompatActivity {
     Button btn;
     TextView month, plan;
+    Handler handler = new Handler();
 
     // 이번 달 구하기
     public static Calendar cal = Calendar.getInstance();
@@ -37,6 +39,9 @@ public class CalendarActivity extends AppCompatActivity {
 
         //이번 달 목표 표시
         plan = (TextView) findViewById(R.id.textViewMonthPlan);
+        GetDataThread getDataThread = new GetDataThread();
+        getDataThread.start();
+        getDataThread.run();
 
         btn = (Button)findViewById(R.id.calendarButton);
         btn.setOnClickListener(new View.OnClickListener() {
@@ -46,6 +51,20 @@ public class CalendarActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+
+        // open database
+        if (database != null) {
+            database.close();
+            database = null;
+        }
+
+        database = GoalDatabase.getInstance(this);
+        boolean isOpen = database.open();
+        if (isOpen) {
+            Log.d(TAG, "Goal database is open.");
+        } else {
+            Log.d(TAG, "Goal database is not open.");
+        }
     }
 
     //이번달 목표 불러서 나타내기
@@ -64,5 +83,34 @@ public class CalendarActivity extends AppCompatActivity {
         }
 
         cursor.close();
+    }
+
+    public void executeQuery(MonthlyPlan item) {
+        Cursor cursor = database.rawQuery("select * from MONTHLY_GOAL");
+        for (int i = 0; i< cursor.getCount(); i++) {
+            cursor.moveToNext();
+            int id = cursor.getInt(0);
+            int month = cursor.getInt(1);
+            String goalText = cursor.getString(2);
+            if (month == item.getMonth())
+                item.setGoalText(goalText);
+
+            // Test code
+            Log.d(TAG, "레코드#" + i + " : " + id + ", " + month + ", " + goalText);
+        }
+        cursor.close();
+    }
+
+    class GetDataThread extends Thread {
+
+        public void run() {
+            super.run();
+            handler.post(new Runnable() {
+                @Override
+                public void run() {
+                    executeQueryForThisMonth();
+                }
+            });
+        }
     }
 }

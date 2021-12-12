@@ -1,19 +1,40 @@
 package smwu.mobileprogramming.termprj;
 
+import static smwu.mobileprogramming.termprj.GoalDatabase.TAG;
+import static smwu.mobileprogramming.termprj.YearlyActivity.cal;
+
 import android.content.Intent;
+import android.database.Cursor;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
+import android.util.Log;
+import android.util.TypedValue;
 import android.view.View;
 import android.widget.Button;
+import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-public class TodayCategory extends AppCompatActivity {
+import java.text.DecimalFormat;
+import java.util.Calendar;
 
+public class TodayCategory extends AppCompatActivity {
+    TodayMain todayMain;
+
+    FragmentWeekly fragmentWeekly;
     Button saveBtn;
 
+    RecyclerView recyclerView;
+    LinearLayoutManager layoutManager;
+    TodayCategoryItemAdapter adapter;
+
+    GoalDatabase database;
+
+    public static DecimalFormat df = new DecimalFormat("0");
+    public static String thisWeek = df.format(cal.get(Calendar.WEEK_OF_MONTH)+1);
     Handler handler = new Handler();
 
     @Override
@@ -21,14 +42,14 @@ public class TodayCategory extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.today_category);
 
+        GetDataThread thread = new GetDataThread();
+        thread.start();
+
         //이번주 목표 카테고리 리사이클러뷰로 띄우기
-        RecyclerView recyclerView = findViewById(R.id.recyclerView);
-        LinearLayoutManager layoutManager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
-        TodayCategoryItemAdapter adapter = new TodayCategoryItemAdapter();
-
-        adapter.addItem(new TodayCategoryItem("이번주 목표 카테고리", 000000));
-
-        recyclerView.setAdapter(adapter);
+        recyclerView = findViewById(R.id.recyclerView);
+        layoutManager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
+        recyclerView.setLayoutManager(layoutManager);
+        adapter = new TodayCategoryItemAdapter();
 
         adapter.setOnItemClickListener(new OnItemClickListener() {
             @Override
@@ -46,7 +67,9 @@ public class TodayCategory extends AppCompatActivity {
             @Override
             public void onTodayCategoryItemClick(TodayCategoryItemAdapter.ViewHolder holder, View view, int position) {
                 TodayCategoryItem item = adapter.getItem(position);
-                //할일에 카테고리 뜨게 하기
+
+                todayMain.planAdapter.addItem(new TodayMain_Plan("TodayCategoryItem.get" , "할 일을 작성해주세요1", "할 일을 작성해주세요2"));
+                todayMain.recyclerView.setAdapter(todayMain.planAdapter);
             }
         });
 
@@ -67,7 +90,6 @@ public class TodayCategory extends AppCompatActivity {
             handler.post(new Runnable() {
                 @Override
                 public void run() {
-                    TodayMain_Plan plan = new TodayMain_Plan("카테고리 선택한거", "할 일을 작성해주세요", "할 일을 작성해주세요");
                     //데이터베이스 저장 함수 insert(thisWeek, category);
 
                     Intent intent = new Intent(getApplicationContext(), TodayMain.class);
@@ -76,4 +98,56 @@ public class TodayCategory extends AppCompatActivity {
             });
         }
     }
+
+    class GetDataThread extends Thread {
+
+        public void run() {
+            super.run();
+            handler.post(new Runnable() {
+                @Override
+                public void run() {
+                    executeQueryForThisWeek();
+                }
+            });
+        }
+    }
+
+    private void executeQueryForThisWeek() {
+        // open database
+        if (database != null) {
+            database.close();
+            database = null;
+        }
+
+        database = GoalDatabase.getInstance(this);
+        boolean isOpen = database.open();
+        if (isOpen) {
+            Log.d(TAG, "Goal database is open.");
+        } else {
+            Log.d(TAG, "Goal database is not open.");
+        }
+
+        Cursor cursor = database.rawQuery("select * from WEEKLY_GOAL WHERE WEEK="+thisWeek);
+        try {
+            cursor.moveToFirst();
+            do {
+                int id = cursor.getInt(0);
+                int week = cursor.getInt(1);
+                String category_title = cursor.getString(2);
+                int color = cursor.getInt(3);
+                String content = cursor.getString(4);
+                Log.d(TAG, "레코드" + " : " + id + ", " + week + ", " + category_title + ", " + color + ", " + content);
+                createTextView(new Category(category_title, color, content));
+            }
+            while (cursor.moveToNext());
+            cursor.close();
+        } catch (Exception ex) {
+            Log.d(TAG, "Exception in executeQueryForThisWeek", ex);
+        }
+    }
+    public void createTextView(Category category) {
+        adapter.addItem(new TodayCategoryItem(category.title, category.color));
+        recyclerView.setAdapter(adapter);
+    }
+
 }

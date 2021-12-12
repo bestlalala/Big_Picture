@@ -15,6 +15,10 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.view.GravityCompat;
+import androidx.drawerlayout.widget.DrawerLayout;
+
+import com.google.android.material.navigation.NavigationView;
 
 import java.text.DecimalFormat;
 import java.util.Calendar;
@@ -37,6 +41,21 @@ public class CalendarActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        //사이드 메뉴바
+//        final DrawerLayout drawerLayout = findViewById(R.id.drawerLayout);
+//
+//        findViewById(R.id.imageMenu).setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//
+//                // start에 지정된 Drawer 열기
+//                drawerLayout.openDrawer(GravityCompat.START);
+//            }
+//        });
+//
+//        NavigationView navigationView = findViewById(R.id.navigationView);
+//        navigationView.setItemIconTintList(null);
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.calender);
 

@@ -78,8 +78,10 @@ public class TodayCategory extends AppCompatActivity {
             @Override
             public void onTodayCategoryItemClick(TodayCategoryItemAdapter.ViewHolder holder, View view, int position) {
                 TodayCategoryItem item = adapter.getItem(position);
-                cate_ = cate;
-                col_ = col;
+                cate_ = adapter.getName(position);
+                col_ = adapter.getColor(position);
+                //cate_ = cate;
+                //col_ = col;
                 todo1_ = todo1;
                 todo2_ = todo2;
             }

@@ -28,6 +28,9 @@ public class TodayCategoryItemAdapter extends RecyclerView.Adapter<TodayCategory
         viewHolder.setItem(item);
     }
 
+    public String getName(int position) { return items.get(position).getCategory_name(); }
+    public int getColor(int position) { return items.get(position).getColor(); }
+
     public int getItemCount() {
         return items.size();
     }

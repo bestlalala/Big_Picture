@@ -86,6 +86,15 @@ public class YearlyActivity extends AppCompatActivity implements OnDatabaseCallb
             @Override
             public void onMonthlyItemClick(MonthlyPlanAdapter.ViewHolder holder, View view, int position) {
             }
+
+            @Override
+            public void onTodayPlanItemClick(TodayMain_PlanAdapter.ViewHolder holder, View view, int position) {
+
+            }
+
+            @Override
+            public void onTodayCategoryItemClick(TodayCategoryItemAdapter.ViewHolder holder, View view, int position) {
+            }
         });
 
         backBtn = findViewById(R.id.button_back);

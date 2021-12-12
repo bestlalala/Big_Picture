@@ -30,7 +30,7 @@ public class HomeActivity extends AppCompatActivity {
         homeBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(getApplicationContext(), YearlyActivity.class);  // 캘린더 페이지 액티비티로 수정해야 함.
+                Intent intent = new Intent(getApplicationContext(), CalendarActivity.class);  // 캘린더 페이지 액티비티로 수정해야 함.
                 startActivity(intent);
             }
         });

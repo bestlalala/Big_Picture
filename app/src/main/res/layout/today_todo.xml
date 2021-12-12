@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/textViewTodayDate"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_margin="10dp"
+        android:text="2021/11/11 ~요일"
+        android:background="#E5E5E5"
+        android:textSize="20dp"
+        android:textStyle="bold"
+        android:gravity="center"/>
+
+    <TextView
+        android:id="@+id/textViewTodayExplain"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+        android:text="오늘의 할 일을 수정해봅시다!"
+        android:layout_below="@+id/textViewTodayDate"
+        android:textSize="20dp"
+        android:textStyle="bold"
+        android:gravity="center"/>
+
+    <RelativeLayout
+        android:id="@+id/RelativeLayoutCategory"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/textViewTodayExplain"
+        android:layout_margin="20dp"
+        android:background="@drawable/layout_border">
+
+        <TextView
+            android:id="@+id/textViewTodayCategory"
+            android:layout_width="wrap_content"
+            android:layout_height="40dp"
+            android:layout_margin="15dp"
+            android:background="#D7EFB8"
+            android:padding="10dp"
+            android:gravity="center"
+            android:text="HTTP 웹 기본 지식 강의 다 듣기" />
+
+        <TextView
+            android:id="@+id/textViewTodayCategoryList1"
+            android:layout_width="wrap_content"
+            android:layout_height="40dp"
+            android:layout_below="@+id/textViewTodayCategory"
+            android:layout_margin="5dp"
+            android:gravity="center"
+            android:text="- ch5 다 듣기" />
+
+        <TextView
+            android:id="@+id/textViewTodayCategoryList2"
+            android:layout_width="wrap_content"
+            android:layout_height="40dp"
+            android:layout_below="@+id/textViewTodayCategoryList1"
+            android:layout_margin="5dp"
+            android:gravity="center"
+            android:text="- ch5 다 듣기" />
+
+        <TextView
+            android:id="@+id/textViewTodayCategoryList3"
+            android:layout_width="wrap_content"
+            android:layout_height="40dp"
+            android:layout_below="@+id/textViewTodayCategoryList2"
+            android:layout_margin="5dp"
+            android:gravity="center"
+            android:text="- ch5 다 듣기" />
+    </RelativeLayout>
+
+    <TextView
+        android:id="@+id/textViewTodayTodoExplain"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/RelativeLayoutCategory"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginEnd="10dp"
+        android:layout_marginBottom="10dp"
+        android:gravity="center"
+        android:text="이번주 목표 중 오늘 할 일은 무엇인가요?"
+        android:textSize="20dp"
+        android:textStyle="bold" />
+
+    <RelativeLayout
+        android:id="@+id/RelativeLayoutTodo"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/textViewTodayTodoExplain"
+        android:layout_margin="20dp"
+        android:background="@drawable/layout_border">
+
+        <EditText
+            android:id="@+id/diary"
+            android:layout_width="match_parent"
+            android:layout_height="70dp"
+            android:layout_margin="10dp"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginEnd="10dp"
+            android:layout_marginBottom="10dp"
+            android:background="@color/white"
+            android:hint="오늘의 할 일을 작성해주세요" />
+
+
+    </RelativeLayout>
+
+    <Button
+        android:id="@+id/todoSaveButton"
+        android:layout_width="80dp"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentBottom="true"
+        android:layout_margin="40dp"
+        android:backgroundTint="#E5E5E5"
+        android:gravity="center"
+        android:text="저장"
+        android:textColor="@color/black"
+        android:textSize="20dp"
+        android:textStyle="bold" />
+
+</RelativeLayout>

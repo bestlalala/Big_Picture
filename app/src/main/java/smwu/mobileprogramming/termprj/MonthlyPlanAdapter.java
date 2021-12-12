@@ -62,6 +62,14 @@ public class MonthlyPlanAdapter extends RecyclerView.Adapter<MonthlyPlanAdapter.
     }
 
     @Override
+    public void onTodayPlanItemClick(TodayMain_PlanAdapter.ViewHolder holder, View view, int position) {
+    }
+
+    @Override
+    public void onTodayCategoryItemClick(TodayCategoryItemAdapter.ViewHolder holder, View view, int position) {
+    }
+
+    @Override
     public void onYearlyItemClick(YearlyPlanAdapter.ViewHolder holder, View view, int position) { }
 
     static class ViewHolder extends RecyclerView.ViewHolder{
